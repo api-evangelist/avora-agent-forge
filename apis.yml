@@ -1,0 +1,99 @@
+name: AVORA Agent Forge
+description: >-
+  AVORA Agent Forge is an evidence-first Solana SPL token risk scanner and public AI interoperability service for
+  humans, wallets, and autonomous agents. It exposes two REST APIs (OpenAPI 3.1), a hosted MCP server, and an A2A agent
+  card with published skills. Access is unauthenticated; paid tiers are gated by non-custodial, user-signed Solana Pay
+  (USDC) settlement verified on-chain rather than API keys.
+url: https://avora-agent-forge.apievangelist.com/apis.yml
+created: '2026-07-30'
+modified: '2026-07-30'
+specificationVersion: '0.21'
+tags:
+  - Blockchain
+  - Crypto
+  - Solana
+  - Token Risk
+  - Due Diligence
+  - On-chain Evidence
+  - Fraud Intelligence
+  - AI Agents
+  - MCP
+  - A2A
+  - Signed Receipts
+  - Provenance
+  - Non-custodial Payments
+  - USDC
+  - Solana Pay
+  - Public-sector AI Interoperability
+apis:
+  - name: AVORA Agent Forge Commerce API
+    description: >-
+      Solana SPL token risk scanner. Free preview scan, Solana Pay (USDC) payment order creation, on-chain settlement
+      verification returning signed evidence packets, and privacy-preserving revenue funnel status. OpenAPI 3.1 v2.1.0;
+      no auth.
+    humanURL: https://avora-agent-forge.netlify.app/agent-forge/
+    baseURL: https://avora-agent-forge.netlify.app/api/agent
+    tags:
+      - Blockchain
+      - Crypto
+      - Solana
+      - Token Risk
+      - Due Diligence
+      - On-chain Evidence
+      - Fraud Intelligence
+      - AI Agents
+      - MCP
+      - A2A
+      - Signed Receipts
+      - Provenance
+      - Non-custodial Payments
+      - USDC
+      - Solana Pay
+      - Public-sector AI Interoperability
+    properties:
+      - type: OpenAPI
+        url: https://avora-agent-forge.netlify.app/agent-forge/openapi.json
+      - type: Documentation
+        url: https://avora-agent-forge.netlify.app/agent-forge/
+      - type: MCP
+        url: https://avora-agent-forge.netlify.app/mcp
+      - type: LLMSTxt
+        url: https://avora-agent-forge.netlify.app/llms.txt
+      - type: AgentSkills
+        url: https://avora-agent-forge.netlify.app/.well-known/agent-card.json
+  - name: AVORA Public AI Interoperability API
+    description: >-
+      Read-only, signed public-data assessments with provenance and limitations, returning Ed25519 JWS receipts for
+      A2A/MCP/OpenAPI/public-sector workflows. OpenAPI 3.1 v1.0.0; no auth; human review required.
+    humanURL: https://avora-agent-forge.netlify.app/public-sector/
+    baseURL: https://avora-agent-forge.netlify.app/api/gov/v1
+    tags:
+      - Blockchain
+      - Crypto
+      - Solana
+      - Token Risk
+      - Due Diligence
+      - On-chain Evidence
+      - Fraud Intelligence
+      - AI Agents
+      - MCP
+      - A2A
+      - Signed Receipts
+      - Provenance
+      - Non-custodial Payments
+      - USDC
+      - Solana Pay
+      - Public-sector AI Interoperability
+    properties:
+      - type: OpenAPI
+        url: https://avora-agent-forge.netlify.app/public-sector/openapi.json
+      - type: Documentation
+        url: https://avora-agent-forge.netlify.app/public-sector/
+maintainers:
+  - FN: AVORA Agent Forge
+    url: https://avora-agent-forge.netlify.app/
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 95
+  at: '2026-07-30T09:29:07.744Z'
