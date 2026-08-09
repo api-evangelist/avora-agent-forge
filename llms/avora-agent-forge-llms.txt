@@ -1,0 +1,68 @@
+# AVORA Agent Forge
+
+AVORA Agent Forge provides evidence-first Solana token risk scans.
+
+Remote MCP for ChatGPT, Claude, Grok, and other compatible AI clients:
+https://avora-agent-forge.netlify.app/mcp
+
+MCP tools:
+- scan_solana_token
+- scan_solana_token_public_sector
+- list_avora_offers
+- create_starter_snapshot_order
+- create_pro_report_order
+- create_portfolio_report_order
+- verify_starter_snapshot_payment
+- verify_pro_report_payment
+- verify_portfolio_report_payment
+- get_avora_service_info
+- get_verified_revenue_status
+
+Free preview:
+GET /api/agent/scan?mint={solana_mint}
+
+List machine-readable offers:
+GET /api/agent/offers?campaign={campaign}
+
+Create a 1 USDC Signed Risk Snapshot order:
+GET /api/agent/payment-order?tier=starter&mint={solana_mint}&campaign={campaign}
+
+Create a 9 USDC Pro Evidence Packet order:
+GET /api/agent/payment-order?tier=pro&mint={solana_mint}&campaign={campaign}
+
+Create a 49 USDC Portfolio Due Diligence order:
+GET /api/agent/payment-order?tier=portfolio&mints={comma_separated_2_to_10_mints}&campaign={campaign}
+
+Verify payment and retrieve the selected paid artifact:
+POST /api/agent/pro-scan
+Content-Type: application/json
+Body: {"tier":"starter|pro","mint":"...","reference":"...","orderId":"..."}
+
+OpenAPI: /agent-forge/openapi.json
+APIs.json index: /apis.json
+Pricing catalog: /agent-forge/pricing.json
+Machine offers API: /api/agent/offers
+Solana token risk guide: /agent-forge/solana-token-risk-check/
+Solana due diligence guide: /agent-forge/solana-token-due-diligence/
+AI token risk API guide: /agent-forge/ai-token-risk-api/
+Portfolio console: /agent-forge/portfolio/
+Live commerce status: /agent-forge/status/
+Verified aggregate revenue API: GET /api/agent/revenue?days={1_to_90}
+AI connection guide: /ai/
+
+Public-sector and enterprise AI:
+- Guide: /public-sector/
+- Signed report: GET /api/gov/v1/scan?mint={solana_mint}
+- Health: /api/gov/v1/health
+- A2A Agent Card: /.well-known/agent-card.json
+- A2A JSON-RPC: /a2a
+- A2A HTTP+JSON: POST /message:send
+- Public verification keys: /.well-known/jwks.json
+- Governance profile: /.well-known/ai-governance.json
+- OpenAPI: /public-sector/openapi.json
+- DCAT 3 catalog: /public-sector/catalog.jsonld
+
+The service is non-custodial and never requests private keys or seed phrases.
+Commerce telemetry is aggregate-only and does not publish wallet, mint, IP, or user identifiers.
+Reports are technical information, not investment, legal, or tax advice.
+Public-sector metadata is a voluntary alignment profile, not government approval or certification.

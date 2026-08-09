@@ -1,0 +1,96 @@
+generated: '2026-08-09'
+method: derived
+source: >-
+  openapi/*.json, https://avora-agent-forge.netlify.app/llms.txt,
+  https://avora-agent-forge.netlify.app/agent-forge/pricing.json,
+  mcp/avora-agent-forge-tools-list.json
+authentication:
+  style: none
+  detail: >-
+    No securitySchemes; all operations are anonymous. Paid delivery is gated by verified
+    on-chain settlement rather than a credential. See
+    authentication/avora-agent-forge-authentication.yml.
+idempotency:
+  supported: true
+  mechanism: client-supplied settlement reference
+  key_field: reference
+  scope: per payment order
+  header: null
+  detail: >-
+    verifyPaymentAndDeliverEvidence is keyed on a unique `reference` plus `orderId` from
+    the payment order, and the provider states it validates a "unique reference" before
+    delivering. Re-posting the same reference and orderId returns the same paid evidence
+    packet rather than charging or issuing again, which is what makes the 402
+    retry-until-settled loop safe to repeat.
+  mcp_confirmation: >-
+    The live MCP tool set marks all three verify_*_payment tools idempotentHint: true, and
+    the read tools scan_solana_token, list_avora_offers, get_avora_service_info and
+    get_verified_revenue_status idempotentHint: true. The three create_*_order tools are
+    marked idempotentHint: false - ordering is the only non-idempotent step.
+  caveat: >-
+    Idempotency is carried in the request body as a payment reference, not via a
+    standard Idempotency-Key header, and there is no documented retention window.
+pagination:
+  supported: false
+  detail: >-
+    No collection endpoint paginates. listEvidenceOffers returns the full offer catalog;
+    getVerifiedRevenueStatus takes a `days` window (1-90, default 30) rather than a cursor.
+field_expansion:
+  supported: false
+metadata:
+  supported: true
+  fields: [campaign]
+  detail: >-
+    An optional `campaign` attribution code (max 16 chars, ^[A-Za-z0-9_-]+$) may be passed
+    on scan, offers, and order operations. It is written into the on-chain memo and is
+    aggregate-only - the provider states no wallet, mint, IP, or user identifier is stored.
+request_tracing:
+  supported: true
+  field: requestId
+  location: query parameter on the public-sector scan; tool parameter on MCP
+  detail: >-
+    createSignedSolanaTokenAssessment and the corresponding MCP tool accept an optional
+    caller trace ID. It is echoed into the signed assessment. No response
+    request-id header is documented.
+versioning:
+  scheme: uri-path (public-sector) + document version (commerce)
+  detail: >-
+    The public-sector API pins /api/gov/v1/ in the path at version 1.0.0. The commerce API
+    has no version segment in its paths (/api/agent/*) and versions only the OpenAPI
+    document, currently 3.0.0 - so a breaking change there has no path-level escape hatch.
+  current:
+    commerce: 3.0.0
+    public_sector: 1.0.0
+error_envelope:
+  documented: false
+  detail: >-
+    No error schema or media type on any 4xx/5xx. See
+    errors/avora-agent-forge-problem-types.yml.
+  notable_status:
+    "402": Payment not yet settled - retryable, and the core state of the commerce flow.
+rate_limiting:
+  documented: false
+  detail: >-
+    No rate limit headers, no 429 response, and no published quota. With no caller
+    identity there is also no per-caller dimension to limit on.
+response_integrity:
+  mechanism: Ed25519 JWS receipt
+  verify_against: https://avora-agent-forge.netlify.app/.well-known/jwks.json
+  detail: >-
+    Public-sector assessments are independently verifiable offline against the published
+    JWKS. This is the provider's strongest convention and is unusual for a service of this
+    size.
+decision_policy:
+  human_review_required: true
+  autonomous_adverse_action_permitted: false
+  investment_recommendation_permitted: false
+  source: https://avora-agent-forge.netlify.app/.well-known/ai-governance.json
+  detail: >-
+    The provider explicitly forbids agents taking autonomous adverse action on the output
+    and requires human review. An agent integrating this API is expected to surface, not
+    act on, the risk assessment.
+cross_links:
+  errors: errors/avora-agent-forge-problem-types.yml
+  lifecycle: lifecycle/avora-agent-forge-lifecycle.yml
+  authentication: authentication/avora-agent-forge-authentication.yml
+  data_model: data-model/avora-agent-forge-data-model.yml

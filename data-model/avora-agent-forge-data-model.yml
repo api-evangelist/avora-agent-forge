@@ -1,0 +1,106 @@
+generated: '2026-08-09'
+method: derived
+source: >-
+  openapi/avora-agent-forge-commerce-openapi.json components.schemas,
+  openapi/avora-agent-forge-public-sector-openapi.json components.schemas
+entities:
+  - name: SolanaMint
+    kind: value-object
+    type: string
+    pattern: '^[1-9A-HJ-NP-Za-km-z]{32,44}$'
+    description: >-
+      A base58 Solana SPL token mint address. The universal subject identifier across
+      every operation on both APIs - the thing being assessed.
+  - name: PaymentProof
+    kind: object
+    required: [reference, orderId]
+    description: >-
+      Evidence that a Solana Pay USDC settlement was created and can be located on-chain.
+      The base shape the three tier-specific verification schemas build on.
+  - name: StarterVerification
+    kind: object
+    tier: starter
+    price_usdc: '1'
+    description: Verification payload for the 1 USDC Signed Risk Snapshot.
+  - name: ProVerification
+    kind: object
+    tier: pro
+    price_usdc: '9'
+    description: Verification payload for the 9 USDC Pro Evidence Packet.
+  - name: PortfolioVerification
+    kind: object
+    tier: portfolio
+    price_usdc: '49'
+    mint_count: {minimum: 2, maximum: 10}
+    description: Verification payload for the 49 USDC Portfolio Due Diligence bundle.
+  - name: SignedAssessment
+    kind: object
+    spec: openapi/avora-agent-forge-public-sector-openapi.json
+    description: >-
+      A public-data token assessment carrying provenance, known limitations, governance
+      controls, and an Ed25519 JWS receipt verifiable against the published JWKS.
+relationships:
+  - from: StarterVerification
+    to: PaymentProof
+    type: extends
+    via: oneOf branch of verifyPaymentAndDeliverEvidence requestBody
+  - from: ProVerification
+    to: PaymentProof
+    type: extends
+    via: oneOf branch of verifyPaymentAndDeliverEvidence requestBody
+  - from: PortfolioVerification
+    to: PaymentProof
+    type: extends
+    via: oneOf branch of verifyPaymentAndDeliverEvidence requestBody
+  - from: StarterVerification
+    to: SolanaMint
+    type: has_one
+    via: mint
+  - from: ProVerification
+    to: SolanaMint
+    type: has_one
+    via: mint
+  - from: PortfolioVerification
+    to: SolanaMint
+    type: has_many
+    via: mints
+    cardinality: 2-10
+  - from: SignedAssessment
+    to: SolanaMint
+    type: has_one
+    via: mint
+  - from: PaymentProof
+    to: PaymentOrder
+    type: belongs_to
+    via: orderId
+    note: >-
+      PaymentOrder is returned by createPaidEvidenceOrder but is not declared as a named
+      schema in the spec - the 200 response carries a description only. The relationship is
+      real (orderId is required on every verification) but the target entity is
+      undocumented.
+identifiers:
+  - field: mint
+    kind: base58 Solana SPL mint address
+    subject: true
+  - field: reference
+    kind: Solana Pay settlement reference
+    role: idempotency key and payment locator
+  - field: orderId
+    kind: provider-issued order identifier
+    role: binds a payment to a product tier and subject
+  - field: campaign
+    kind: attribution code (max 16 chars)
+    role: aggregate-only marketing attribution, written to the on-chain memo
+  - field: requestId
+    kind: caller-supplied trace ID
+    role: echoed into the signed assessment
+gaps:
+  - >-
+    The response side is almost entirely unmodelled. Only 6 schemas exist across 8
+    operations, and every 200 response is described in prose with no schema - so the scan
+    result, the offer catalog, the payment order, the evidence packet, and the revenue
+    aggregate have no machine-readable shape.
+  - >-
+    PaymentOrder and the evidence/report artifacts are referenced by field but never
+    declared as components.schemas.
+  - No shared components between the two specs; SolanaMint is redefined per document.

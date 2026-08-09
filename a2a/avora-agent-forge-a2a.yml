@@ -1,0 +1,53 @@
+generated: '2026-08-09'
+method: probed
+source: https://avora-agent-forge.netlify.app/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: avora-agent-forge.netlify.app
+  legacy_path_checked: /.well-known/agent.json
+  legacy_path_status: 404
+conformance:
+  spec: A2A 1.0.0
+  grade: flavored
+  protocol_version: null
+  preferred_transport: null
+  deviations:
+    - no-protocolVersion
+    - supportedInterfaces-instead-of-additionalInterfaces
+    - no-top-level-url
+  notes: >-
+    capabilities is an object and skills is an array, but the card carries no top-level
+    protocolVersion and no top-level url. Transport bindings are published under a
+    non-standard supportedInterfaces[] array (each entry carrying its own protocolVersion
+    "1.0") rather than the A2A 1.0.0 additionalInterfaces[] with a top-level
+    preferredTransport. Both hard checks that fail are structural, so the card grades
+    flavored rather than near-conformant.
+card:
+  name: AVORA Public Solana Evidence Agent
+  description: >-
+    Produces signed, public-data Solana token assessments with provenance, limitations, and
+    mandatory human-review metadata.
+  version: 1.2.0
+  provider: AVORA
+  documentation_url: https://avora-agent-forge.netlify.app/public-sector/
+  interfaces:
+    - url: https://avora-agent-forge.netlify.app/a2a
+      binding: JSONRPC
+    - url: https://avora-agent-forge.netlify.app
+      binding: HTTP+JSON
+  security_schemes: none
+  default_input_modes: [application/json, text/plain]
+  default_output_modes: [application/json, text/plain]
+  skills: 3
+  skill_ids:
+    - list-avora-offers
+    - public-sector-solana-token-risk
+    - verified-commerce-status
+  file: avora-agent-forge-agent-card.json
+x-evidence:
+  fetched: '2026-08-09'
+  url: https://avora-agent-forge.netlify.app/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 3002

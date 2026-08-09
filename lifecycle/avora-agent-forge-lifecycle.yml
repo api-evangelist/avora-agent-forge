@@ -1,0 +1,63 @@
+generated: '2026-08-09'
+method: derived
+source: openapi/*.json + live probes of the provider site
+versioning:
+  scheme: mixed
+  commerce:
+    current: 3.0.0
+    style: document-version-only
+    path_version: false
+    note: >-
+      Commerce paths (/api/agent/*) carry no version segment, so the only version signal is
+      the OpenAPI info.version. A breaking change has no side-by-side path to migrate
+      through.
+  public_sector:
+    current: 1.0.0
+    style: uri-path
+    path_version: true
+    prefix: /api/gov/v1
+  docs: https://avora-agent-forge.netlify.app/ai/
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or versioning policy page was found, and neither spec documents RFC 8594
+    Sunset or Deprecation headers.
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  operational_status_page: null
+  published: false
+  note: >-
+    /agent-forge/status/ returns 200 but is a commerce/revenue telemetry dashboard (30-day
+    verified USDC settlement, order counts, conversion funnel), not an uptime or incident
+    status page. It reports no availability, no incident history, and no component health,
+    so it is recorded here as evidence and deliberately NOT wired as a StatusPage pointer.
+  probed:
+    url: https://avora-agent-forge.netlify.app/agent-forge/status/
+    status: 200
+    classification: revenue-dashboard
+health_endpoints:
+  - operation: getPublicAiServiceHealth
+    path: /api/gov/v1/health
+    spec: openapi/avora-agent-forge-public-sector-openapi.json
+    note: >-
+      A machine-readable liveness probe exists even though no human status page does.
+changelog:
+  url: null
+  published: false
+  note: >-
+    /changelog/ returned 404 and no dated release notes were found on the site. The
+    commerce OpenAPI has moved 2.1.0 -> 3.0.0 since the catalog submission with no
+    published record of what changed.
+deprecated_operations: []
+version_drift:
+  observed: true
+  detail: >-
+    The apis.io submission recorded the commerce API at v2.1.0; the live spec at
+    /agent-forge/openapi.json is v3.0.0 as of this probe. A major version moved with no
+    changelog, no deprecation notice, and no path-level versioning.

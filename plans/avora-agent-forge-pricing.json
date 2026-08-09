@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.1",
+  "currency": "USDC",
+  "network": "solana-mainnet",
+  "nonCustodial": true,
+  "walletApprovalRequired": true,
+  "verifiedRevenueStatus": {
+    "dashboard": "https://avora-agent-forge.netlify.app/agent-forge/status/",
+    "api": "https://avora-agent-forge.netlify.app/api/agent/revenue",
+    "privacy": "Aggregate only; no wallet, mint, IP, or user identifiers published."
+  },
+  "offers": [
+    {
+      "id": "free",
+      "name": "Free Scan",
+      "price": "0",
+      "mintCount": 1,
+      "action": {
+        "method": "GET",
+        "urlTemplate": "https://avora-agent-forge.netlify.app/api/agent/scan?mint={mint}"
+      }
+    },
+    {
+      "id": "starter",
+      "name": "Signed Risk Snapshot",
+      "price": "1",
+      "mintCount": 1,
+      "includes": [
+        "full live evidence snapshot",
+        "timestamped signed assessment",
+        "verified payment receipt",
+        "downloadable JSON record"
+      ],
+      "order": {
+        "method": "GET",
+        "urlTemplate": "https://avora-agent-forge.netlify.app/api/agent/payment-order?tier=starter&mint={mint}&campaign={campaign}"
+      }
+    },
+    {
+      "id": "pro",
+      "name": "Pro Evidence Packet",
+      "price": "9",
+      "mintCount": 1,
+      "includes": [
+        "full technical evidence",
+        "signed assessment receipt",
+        "decision and listing checklist",
+        "downloadable JSON record"
+      ],
+      "order": {
+        "method": "GET",
+        "urlTemplate": "https://avora-agent-forge.netlify.app/api/agent/payment-order?tier=pro&mint={mint}&campaign={campaign}"
+      }
+    },
+    {
+      "id": "portfolio",
+      "name": "Portfolio Due Diligence",
+      "price": "49",
+      "mintCount": {
+        "minimum": 2,
+        "maximum": 10
+      },
+      "includes": [
+        "comparative risk ranking",
+        "signed assessment per token",
+        "route and DEX coverage summary",
+        "downloadable evidence bundle"
+      ],
+      "order": {
+        "method": "GET",
+        "urlTemplate": "https://avora-agent-forge.netlify.app/api/agent/payment-order?tier=portfolio&mints={comma_separated_mints}&campaign={campaign}"
+      }
+    }
+  ],
+  "paymentVerification": {
+    "method": "POST",
+    "url": "https://avora-agent-forge.netlify.app/api/agent/pro-scan",
+    "validatedFields": [
+      "recipient",
+      "USDC mint",
+      "amount",
+      "reference",
+      "product",
+      "subject hash",
+      "campaign memo",
+      "payment age"
+    ]
+  },
+  "disclosures": [
+    "Creating an order does not transfer funds.",
+    "The user must review and sign the payment in a compatible wallet.",
+    "Reports are technical information, not investment, legal, or tax advice.",
+    "No outcome, return, listing, or government approval is guaranteed."
+  ]
+}

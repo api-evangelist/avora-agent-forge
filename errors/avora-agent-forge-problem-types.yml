@@ -1,0 +1,65 @@
+generated: '2026-08-09'
+method: derived
+source: >-
+  openapi/avora-agent-forge-commerce-openapi.json,
+  openapi/avora-agent-forge-public-sector-openapi.json
+format: undocumented
+format_note: >-
+  Neither spec declares a response content schema or media type for any 4xx/5xx - each
+  error response carries a description string only. The error envelope is therefore not
+  machine-readable, and RFC 9457 application/problem+json is not in use. The statuses and
+  meanings below are exactly what the specs publish; no envelope shape is inferred.
+problems:
+  - status: 400
+    title: Invalid mint or upstream scan failure
+    source_operation: openapi/avora-agent-forge-commerce-openapi.json#scanSolanaTokenFree
+    remediation: >-
+      Supply a base58 SPL mint matching ^[1-9A-HJ-NP-Za-km-z]{32,44}$. This status also
+      covers upstream provider failure, so it is not purely a client error.
+  - status: 400
+    title: Invalid tier, mint count, or address
+    source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
+    remediation: >-
+      tier must be starter, pro, or portfolio. starter and pro require mint; portfolio
+      requires mints as 2-10 comma-separated base58 mints.
+  - status: 400
+    title: Invalid order or verification parameters
+    source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+    remediation: >-
+      Body must satisfy one of StarterVerification, ProVerification, or
+      PortfolioVerification, each requiring reference and orderId.
+  - status: 402
+    title: Matching payment not found yet
+    source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+    retryable: true
+    remediation: >-
+      The on-chain USDC settlement for this reference has not been observed. The wallet
+      signature may still be confirming. Retry with the same reference and orderId - this
+      is the operation's normal pre-settlement state, not a terminal failure.
+  - status: 503
+    title: Revenue monitor temporarily unavailable
+    source_operation: openapi/avora-agent-forge-commerce-openapi.json#getVerifiedRevenueStatus
+    retryable: true
+    remediation: Aggregate telemetry backend is down; retry later.
+  - status: 400
+    title: Invalid mint
+    source_operation: openapi/avora-agent-forge-public-sector-openapi.json#createSignedSolanaTokenAssessment
+    remediation: Supply a valid base58 SPL token mint.
+  - status: 503
+    title: Signing or upstream dependency unavailable
+    source_operation: openapi/avora-agent-forge-public-sector-openapi.json#createSignedSolanaTokenAssessment
+    retryable: true
+    remediation: >-
+      Signing key or an upstream public data source is unavailable; no assessment can be
+      signed. Retry later.
+  - status: 503
+    title: Service unhealthy
+    source_operation: openapi/avora-agent-forge-public-sector-openapi.json#getPublicAiServiceHealth
+    retryable: true
+    remediation: Health probe reports the service is degraded or down.
+gaps:
+  - No error code vocabulary, no error body schema, and no machine-readable error type URIs.
+  - No 429 documented on any operation despite a public unauthenticated surface, so rate
+    limit rejection is not described.
+  - No 401/403 anywhere, which is consistent with the unauthenticated model; 402 is the
+    only authorization-shaped status.

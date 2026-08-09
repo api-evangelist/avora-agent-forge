@@ -1,0 +1,37 @@
+generated: '2026-08-09'
+method: generated
+source: >-
+  openapi/avora-agent-forge-commerce-openapi.json,
+  openapi/avora-agent-forge-public-sector-openapi.json,
+  mcp/avora-agent-forge-tools-list.json
+note: >-
+  Every operationId below was verified verbatim against the harvested specs. The provider
+  publishes no AGENTS.md or first-party skill files; these are API Evangelist generated
+  operating instructions grounded in the real contract.
+skills:
+  - file: avora-agent-forge-scan-solana-token.md
+    name: Scan a Solana token for risk
+    api: openapi/avora-agent-forge-commerce-openapi.json
+    operations: [scanSolanaTokenFree]
+    mcp_tools: [scan_solana_token]
+  - file: avora-agent-forge-buy-signed-evidence.md
+    name: Order and collect a paid evidence packet
+    api: openapi/avora-agent-forge-commerce-openapi.json
+    operations: [listEvidenceOffers, createPaidEvidenceOrder, verifyPaymentAndDeliverEvidence]
+    mcp_tools:
+      - list_avora_offers
+      - create_starter_snapshot_order
+      - create_pro_report_order
+      - create_portfolio_report_order
+      - verify_starter_snapshot_payment
+      - verify_pro_report_payment
+      - verify_portfolio_report_payment
+  - file: avora-agent-forge-verify-signed-assessment.md
+    name: Obtain and verify a signed public-sector assessment
+    api: openapi/avora-agent-forge-public-sector-openapi.json
+    operations:
+      - getPublicAiServiceHealth
+      - createSignedSolanaTokenAssessment
+      - getReceiptVerificationKeys
+    mcp_tools: [scan_solana_token_public_sector]
+    a2a_skills: [public-sector-solana-token-risk]

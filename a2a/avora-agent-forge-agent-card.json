@@ -1,0 +1,85 @@
+{
+  "name": "AVORA Public Solana Evidence Agent",
+  "description": "Produces signed, public-data Solana token assessments with provenance, limitations, and mandatory human-review metadata. It does not provide investment advice, government approval, or certification.",
+  "supportedInterfaces": [
+    {
+      "url": "https://avora-agent-forge.netlify.app/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    },
+    {
+      "url": "https://avora-agent-forge.netlify.app",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "provider": {
+    "organization": "AVORA",
+    "url": "https://avora-agent-forge.netlify.app/public-sector/"
+  },
+  "version": "1.2.0",
+  "documentationUrl": "https://avora-agent-forge.netlify.app/public-sector/",
+  "iconUrl": "https://avora-agent-forge.netlify.app/AVORA.png",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extendedAgentCard": false
+  },
+  "securitySchemes": {},
+  "securityRequirements": [],
+  "defaultInputModes": ["application/json", "text/plain"],
+  "defaultOutputModes": ["application/json", "text/plain"],
+  "skills": [
+    {
+      "id": "list-avora-offers",
+      "name": "List Evidence Offers",
+      "description": "Returns current product scope and prices without creating an order or moving funds.",
+      "tags": [
+        "offers",
+        "solana-pay",
+        "user-consent",
+        "read-only"
+      ],
+      "examples": [
+        "{\"operation\":\"list_avora_offers\"}"
+      ],
+      "inputModes": ["application/json", "text/plain"],
+      "outputModes": ["application/json", "text/plain"]
+    },
+    {
+      "id": "public-sector-solana-token-risk",
+      "name": "Signed Solana Token Assessment",
+      "description": "Scans one SPL token mint and returns public evidence, provenance, risk limitations, governance controls, and an Ed25519 JWS receipt.",
+      "tags": [
+        "solana",
+        "public-data",
+        "risk-evidence",
+        "provenance",
+        "signed-receipt",
+        "human-review"
+      ],
+      "examples": [
+        "Scan Solana mint 2UzLRyok52arWwMA6V8NbThadYgk4UwPz5GgxCYsQU94",
+        "{\"operation\":\"scan_solana_token\",\"mint\":\"2UzLRyok52arWwMA6V8NbThadYgk4UwPz5GgxCYsQU94\"}"
+      ],
+      "inputModes": ["application/json", "text/plain"],
+      "outputModes": ["application/json", "text/plain"]
+    },
+    {
+      "id": "verified-commerce-status",
+      "name": "Verified Aggregate Commerce Status",
+      "description": "Returns privacy-preserving scan, order, delivery, and verified Solana settlement aggregates without wallet, mint, IP, or user identifiers.",
+      "tags": [
+        "public-data",
+        "commerce-status",
+        "onchain-revenue",
+        "aggregate-only"
+      ],
+      "examples": [
+        "{\"operation\":\"get_verified_revenue_status\",\"days\":30}"
+      ],
+      "inputModes": ["application/json", "text/plain"],
+      "outputModes": ["application/json", "text/plain"]
+    }
+  ]
+}

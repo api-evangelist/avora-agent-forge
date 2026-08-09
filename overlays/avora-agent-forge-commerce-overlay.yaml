@@ -1,0 +1,92 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for AVORA Agent Forge Commerce API
+  version: 1.0.0
+extends: openapi/avora-agent-forge-commerce-openapi.json
+x-provenance:
+  generated: '2026-08-09'
+  method: generated
+  source: >-
+    Derived from the harvested spec plus the live MCP tools/list response and the
+    provider's published pricing.json. Adds tags, agent-facing annotations, and the
+    payment-state semantics the original spec leaves in prose. The original spec is never
+    mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-08-09'
+      x-agent-surfaces:
+        mcp: https://avora-agent-forge.netlify.app/mcp
+        a2a: https://avora-agent-forge.netlify.app/.well-known/agent-card.json
+        llms_txt: https://avora-agent-forge.netlify.app/llms.txt
+
+  - target: $
+    update:
+      tags:
+        - name: Risk Scan
+          description: Free, unauthenticated Solana SPL token risk evaluation.
+        - name: Offers
+          description: Machine-readable product catalog and checkout templates.
+        - name: Settlement
+          description: >-
+            Solana Pay (USDC) order creation and on-chain settlement verification. Order
+            creation never moves funds; the user signs in their own wallet.
+        - name: Telemetry
+          description: Privacy-preserving aggregate commerce and conversion status.
+
+  - target: $.paths['/api/agent/scan'].get
+    update:
+      tags: [Risk Scan]
+      x-mcp-tool: scan_solana_token
+      x-idempotent: true
+
+  - target: $.paths['/api/agent/offers'].get
+    update:
+      tags: [Offers]
+      x-mcp-tool: list_avora_offers
+      x-idempotent: true
+
+  - target: $.paths['/api/agent/payment-order'].get
+    update:
+      tags: [Settlement]
+      x-mcp-tools: [create_starter_snapshot_order, create_pro_report_order, create_portfolio_report_order]
+      x-idempotent: false
+      x-moves-funds: false
+      x-agent-note: >-
+        Creating an order is a read-shaped GET that returns a Solana Pay URL. Funds move
+        only when the end user signs the transaction in their own wallet. An agent must
+        surface the order to a human for signature and must not represent the order as a
+        completed purchase.
+
+  - target: $.paths['/api/agent/pro-scan'].post
+    update:
+      tags: [Settlement]
+      x-mcp-tools: [verify_starter_snapshot_payment, verify_pro_report_payment, verify_portfolio_report_payment]
+      x-idempotent: true
+      x-idempotency-key-field: reference
+      x-agent-note: >-
+        402 is the expected pre-settlement state, not a failure. Poll with the same
+        reference and orderId until settlement is observed; repeated calls with the same
+        reference return the same evidence packet and never re-charge.
+
+  - target: $.paths['/api/agent/pro-scan'].post.responses['402']
+    update:
+      x-retryable: true
+      x-retry-strategy: >-
+        Poll with backoff using the identical reference and orderId. Do not create a new
+        payment order on 402 - doing so would ask the user to pay twice.
+
+  - target: $.paths['/api/agent/revenue'].get
+    update:
+      tags: [Telemetry]
+      x-mcp-tool: get_verified_revenue_status
+      x-idempotent: true
+      x-privacy: >-
+        Aggregate only. No wallet, mint, IP, signature, or user identifier is returned.
+
+  - target: $.components.schemas.SolanaMint
+    update:
+      description: >-
+        A base58-encoded Solana SPL token mint address. This is the subject identifier for
+        every assessment across both AVORA APIs.
+      examples: ['2UzLRyok52arWwMA6V8NbThadYgk4UwPz5GgxCYsQU94']

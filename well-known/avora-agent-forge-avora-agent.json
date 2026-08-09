@@ -1,0 +1,60 @@
+{
+  "name": "AVORA Agent Forge",
+  "description": "Evidence-first Solana token risk scans with optional paid evidence reports.",
+  "version": "3.0.0",
+  "capabilities": [
+    "solana-token-risk-preview",
+    "solana-token-risk-report",
+    "solana-pay-usdc-verification",
+    "streamable-http-mcp",
+    "a2a-1.0",
+    "signed-public-sector-assessment",
+    "dcat-3-discovery",
+    "aggregate-commerce-monitor",
+    "verified-onchain-revenue"
+  ],
+  "catalog": "/agent-forge/openapi.json",
+  "apiIndex": "/apis.json",
+  "pricing": "/agent-forge/pricing.json",
+  "offersApi": "/api/agent/offers",
+  "status": "/agent-forge/status/",
+  "verifiedRevenueApi": "/api/agent/revenue",
+  "publicSectorCatalog": "/public-sector/catalog.jsonld",
+  "publicSectorOpenapi": "/public-sector/openapi.json",
+  "a2aAgentCard": "/.well-known/agent-card.json",
+  "governanceProfile": "/.well-known/ai-governance.json",
+  "jwks": "/.well-known/jwks.json",
+  "mcp": {
+    "url": "/mcp",
+    "transport": "streamable-http",
+    "authentication": "none"
+  },
+  "payment": {
+    "network": "solana-mainnet",
+    "asset": "USDC",
+    "offers": [
+      {
+        "tier": "starter",
+        "amount": "1",
+        "mints": 1
+      },
+      {
+        "tier": "pro",
+        "amount": "9",
+        "mints": 1
+      },
+      {
+        "tier": "portfolio",
+        "amount": "49",
+        "mints": "2-10"
+      }
+    ],
+    "walletApprovalRequired": true
+  },
+  "dataGovernance": {
+    "classification": "PUBLIC",
+    "containsPersonalData": false,
+    "commerceTelemetry": "aggregate-only",
+    "humanReviewRequired": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "app.netlify.avora-agent-forge/solana-risk",
+  "title": "AVORA Agent Forge",
+  "description": "Solana token scans, signed assessments, user-approved evidence orders, and verified commerce status.",
+  "version": "3.0.0",
+  "websiteUrl": "https://avora-agent-forge.netlify.app/ai/",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://avora-agent-forge.netlify.app/mcp"
+    }
+  ]
+}

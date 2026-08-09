@@ -1,12 +1,19 @@
 name: AVORA Agent Forge
 description: >-
-  AVORA Agent Forge is an evidence-first Solana SPL token risk scanner and public AI interoperability service for
-  humans, wallets, and autonomous agents. It exposes two REST APIs (OpenAPI 3.1), a hosted MCP server, and an A2A agent
-  card with published skills. Access is unauthenticated; paid tiers are gated by non-custodial, user-signed Solana Pay
-  (USDC) settlement verified on-chain rather than API keys.
+  AVORA Agent Forge is an evidence-first Solana SPL token risk scanner and public AI
+  interoperability service built for humans, wallets, and autonomous agents. It publishes two
+  OpenAPI 3.1 REST APIs, a hosted streamable-HTTP MCP server whose tools/list responds
+  anonymously with eleven fully-schemad tools, and an A2A agent card with three published
+  skills. Every operation is unauthenticated: there are no accounts, no API keys, and no OAuth.
+  Paid tiers are gated instead by non-custodial, user-signed Solana Pay (USDC) settlement
+  verified on-chain, where the payment reference doubles as the idempotency key. Public-sector
+  assessments return Ed25519 JWS receipts that any third party can verify offline against a
+  published JWKS, and the service ships a voluntary NIST AI RMF alignment profile that
+  explicitly disclaims certification and government approval and requires human review.
+image: https://avora-agent-forge.netlify.app/AVORA.png
 url: https://avora-agent-forge.apievangelist.com/apis.yml
 created: '2026-07-30'
-modified: '2026-07-30'
+modified: '2026-08-09'
 specificationVersion: '0.21'
 tags:
   - Blockchain
@@ -28,67 +35,117 @@ tags:
 apis:
   - name: AVORA Agent Forge Commerce API
     description: >-
-      Solana SPL token risk scanner. Free preview scan, Solana Pay (USDC) payment order creation, on-chain settlement
-      verification returning signed evidence packets, and privacy-preserving revenue funnel status. OpenAPI 3.1 v2.1.0;
-      no auth.
+      Solana SPL token risk scanner. Free preview scan, machine-readable offer catalog,
+      Solana Pay (USDC) payment order creation, on-chain settlement verification returning
+      signed evidence packets, and privacy-preserving aggregate revenue funnel status.
+      OpenAPI 3.1, document version 3.0.0; no auth.
     humanURL: https://avora-agent-forge.netlify.app/agent-forge/
-    baseURL: https://avora-agent-forge.netlify.app/api/agent
+    baseURL: https://avora-agent-forge.netlify.app
     tags:
       - Blockchain
       - Crypto
       - Solana
       - Token Risk
-      - Due Diligence
       - On-chain Evidence
-      - Fraud Intelligence
-      - AI Agents
-      - MCP
-      - A2A
-      - Signed Receipts
-      - Provenance
       - Non-custodial Payments
       - USDC
       - Solana Pay
-      - Public-sector AI Interoperability
     properties:
       - type: OpenAPI
-        url: https://avora-agent-forge.netlify.app/agent-forge/openapi.json
+        url: openapi/avora-agent-forge-commerce-openapi.json
+      - type: Overlay
+        url: overlays/avora-agent-forge-commerce-overlay.yaml
       - type: Documentation
         url: https://avora-agent-forge.netlify.app/agent-forge/
-      - type: MCP
-        url: https://avora-agent-forge.netlify.app/mcp
-      - type: LLMSTxt
-        url: https://avora-agent-forge.netlify.app/llms.txt
-      - type: AgentSkills
-        url: https://avora-agent-forge.netlify.app/.well-known/agent-card.json
   - name: AVORA Public AI Interoperability API
     description: >-
-      Read-only, signed public-data assessments with provenance and limitations, returning Ed25519 JWS receipts for
-      A2A/MCP/OpenAPI/public-sector workflows. OpenAPI 3.1 v1.0.0; no auth; human review required.
+      Read-only, signed public-data Solana token assessments with provenance, named upstream
+      dependencies, and explicit known limitations, returning Ed25519 JWS receipts verifiable
+      against a published JWKS for A2A/MCP/OpenAPI/public-sector workflows. OpenAPI 3.1
+      v1.0.0; no auth; human review required.
     humanURL: https://avora-agent-forge.netlify.app/public-sector/
-    baseURL: https://avora-agent-forge.netlify.app/api/gov/v1
+    baseURL: https://avora-agent-forge.netlify.app
     tags:
-      - Blockchain
-      - Crypto
       - Solana
-      - Token Risk
-      - Due Diligence
-      - On-chain Evidence
-      - Fraud Intelligence
-      - AI Agents
-      - MCP
-      - A2A
       - Signed Receipts
       - Provenance
-      - Non-custodial Payments
-      - USDC
-      - Solana Pay
       - Public-sector AI Interoperability
+      - AI Agents
     properties:
       - type: OpenAPI
-        url: https://avora-agent-forge.netlify.app/public-sector/openapi.json
+        url: openapi/avora-agent-forge-public-sector-openapi.json
+      - type: Overlay
+        url: overlays/avora-agent-forge-public-sector-overlay.yaml
       - type: Documentation
         url: https://avora-agent-forge.netlify.app/public-sector/
+  - name: AVORA Agent Forge MCP Server
+    description: >-
+      Hosted streamable-HTTP MCP server exposing eleven tools across scanning, offers,
+      Solana Pay ordering, settlement verification, and aggregate commerce telemetry.
+      tools/list responds 200 anonymously with a full JSON Schema inputSchema and MCP
+      annotations per tool.
+    humanURL: https://avora-agent-forge.netlify.app/ai/
+    baseURL: https://avora-agent-forge.netlify.app/mcp
+    tags:
+      - MCP
+      - AI Agents
+      - Solana
+    properties:
+      - type: MCPServer
+        url: mcp/avora-agent-forge-mcp.yml
+      - type: ToolCrosswalk
+        url: mcp/avora-agent-forge-tool-crosswalk.yml
+      - type: Documentation
+        url: https://avora-agent-forge.netlify.app/ai/
+common:
+  - type: DeveloperPortal
+    url: https://avora-agent-forge.netlify.app/agent-forge/
+  - type: Documentation
+    url: https://avora-agent-forge.netlify.app/agent-forge/
+  - type: APIReference
+    url: https://avora-agent-forge.netlify.app/agent-forge/openapi.json
+  - type: GettingStarted
+    url: https://avora-agent-forge.netlify.app/ai/
+  - type: Pricing
+    url: https://avora-agent-forge.netlify.app/agent-forge/pricing.json
+  - type: Plans
+    url: plans/avora-agent-forge-plans.yml
+  - type: MCPServer
+    url: mcp/avora-agent-forge-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/avora-agent-forge-tool-crosswalk.yml
+  - type: AgentCard
+    url: a2a/avora-agent-forge-a2a.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: AgenticAccess
+    url: agentic-access/avora-agent-forge-agentic-access.yml
+  - type: LLMsTxt
+    url: llms/avora-agent-forge-llms.txt
+  - type: WellKnown
+    url: well-known/avora-agent-forge-well-known.yml
+  - type: Authentication
+    url: authentication/avora-agent-forge-authentication.yml
+  - type: Conventions
+    url: conventions/avora-agent-forge-conventions.yml
+  - type: Idempotency
+    url: conventions/avora-agent-forge-conventions.yml
+  - type: ErrorCatalog
+    url: errors/avora-agent-forge-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/avora-agent-forge-lifecycle.yml
+  - type: Conformance
+    url: conformance/avora-agent-forge-conformance.yml
+  - type: DataModel
+    url: data-model/avora-agent-forge-data-model.yml
+  - type: DomainSecurity
+    url: security/avora-agent-forge-domain-security.yml
+  - type: JSONLD
+    url: json-ld/avora-agent-forge-catalog.jsonld
+  - type: Overlay
+    url: overlays/avora-agent-forge-commerce-overlay.yaml
+  - type: Overlay
+    url: overlays/avora-agent-forge-public-sector-overlay.yaml
 maintainers:
   - FN: AVORA Agent Forge
     url: https://avora-agent-forge.netlify.app/
@@ -97,3 +154,22 @@ generated:
   model: claude-opus-4-8
   confidence: 95
   at: '2026-07-30T09:29:07.744Z'
+x-enrichment:
+  date: '2026-08-09'
+  status: enriched
+  pass: local-v1
+  artifacts_added: 31
+x-pointer-notes: >-
+  Pointers deliberately NOT emitted, each because the underlying thing does not exist and
+  emitting it would be false credit: StatusPage (/agent-forge/status/ is a revenue
+  dashboard, not an uptime/incident page); Deprecation (no policy, no Sunset header);
+  Security and VulnerabilityDisclosure (/.well-known/security.txt 404s, no disclosure page,
+  no bug bounty); Compliance and TrustCenter (no audited certification is claimed - a probe
+  hit trust-center.netlify-corp.com only because the host sits on netlify.app, and those are
+  Netlify's certifications); SDKs and Packages (no first-party client library on npm, PyPI,
+  or any registry); ChangeLog (none published, despite the commerce API moving 2.1.0 -> 3.0.0);
+  TermsOfService, PrivacyPolicy and Support (footer links are placeholder "#" anchors);
+  SignUp/Login (no accounts exist by design); GitHubOrganization, Postman, Blog, Roadmap,
+  CLI, Sandbox, Components (none found); OAuthScopes (no OAuth surface); AsyncAPI and
+  Webhooks (no event, streaming, or webhook surface exists - not applicable rather than
+  missing).

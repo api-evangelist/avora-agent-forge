@@ -1,0 +1,57 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for AVORA Public AI Interoperability API
+  version: 1.0.0
+extends: openapi/avora-agent-forge-public-sector-openapi.json
+x-provenance:
+  generated: '2026-08-09'
+  method: generated
+  source: >-
+    Derived from the harvested spec plus the provider's published
+    /.well-known/ai-governance.json and A2A agent card. Surfaces the decision-use
+    boundaries and receipt-verification contract that the spec leaves in prose.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-08-09'
+      x-governance-profile: https://avora-agent-forge.netlify.app/.well-known/ai-governance.json
+      x-decision-policy:
+        use: INFORMATIONAL_ONLY
+        human_review_required: true
+        autonomous_adverse_action_permitted: false
+        investment_recommendation_permitted: false
+      x-certification-claimed: false
+      x-government-approval-claimed: false
+
+  - target: $.paths['/api/gov/v1/scan'].get
+    update:
+      x-mcp-tool: scan_solana_token_public_sector
+      x-a2a-skill: public-sector-solana-token-risk
+      x-response-signed: true
+      x-signature-alg: EdDSA
+      x-verify-keys: https://avora-agent-forge.netlify.app/.well-known/jwks.json
+      x-agent-note: >-
+        The response carries an Ed25519 JWS receipt that a consumer can verify offline
+        against the published JWKS without trusting the transport or re-contacting the
+        provider. Verify the receipt before relying on or forwarding the assessment.
+        Output is informational only - an agent must not take adverse action on it
+        autonomously.
+
+  - target: $.paths['/api/gov/v1/health'].get
+    update:
+      x-agent-note: >-
+        Liveness probe. A 503 here means signing or an upstream public data source is
+        unavailable, so assessments cannot be signed.
+
+  - target: $.paths['/.well-known/jwks.json'].get
+    update:
+      x-agent-note: >-
+        Fetch and cache these keys to verify JWS receipts. Key rotation is not documented,
+        so re-fetch on an unknown kid rather than assuming a stable key.
+
+  - target: $.components.schemas.SignedAssessment
+    update:
+      description: >-
+        A point-in-time, public-data Solana token assessment carrying provenance, named
+        upstream dependencies, explicit known limitations, and an Ed25519 JWS receipt.
+        Point-in-time results can become stale immediately.

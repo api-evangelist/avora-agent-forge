@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0",
+  "service": "AVORA Public AI Interoperability Service",
+  "profileType": "voluntary-alignment-profile",
+  "certificationClaimed": false,
+  "governmentApprovalClaimed": false,
+  "frameworkReferences": [
+    {
+      "name": "NIST AI Risk Management Framework 1.0",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "relationship": "alignment-reference-not-certification"
+    }
+  ],
+  "functions": {
+    "GOVERN": [
+      "Published scope, decision-use boundaries, and known limitations",
+      "Versioned machine-readable contracts",
+      "Independent response verification through public JWKS"
+    ],
+    "MAP": [
+      "Input is limited to a public Solana SPL token mint identifier",
+      "No personal data is intended or requested",
+      "Public upstream dependencies are named in every signed report"
+    ],
+    "MEASURE": [
+      "Deterministic authority, concentration, DEX discovery, and routing checks",
+      "Explicit data-quality status",
+      "Point-in-time timestamps and caller request IDs"
+    ],
+    "MANAGE": [
+      "Human review is mandatory",
+      "Autonomous adverse action is prohibited",
+      "Outputs are informational and not investment, legal, tax, or administrative advice"
+    ]
+  },
+  "dataPolicy": {
+    "classification": "PUBLIC",
+    "containsPersonalData": false,
+    "personalDataIntended": false,
+    "secretsAccepted": false,
+    "walletPrivateKeysAccepted": false
+  },
+  "decisionPolicy": {
+    "use": "INFORMATIONAL_ONLY",
+    "humanReviewRequired": true,
+    "autonomousAdverseActionPermitted": false,
+    "investmentRecommendationPermitted": false
+  },
+  "knownLimitations": [
+    "Point-in-time results can become stale immediately.",
+    "Upstream public services can be incomplete, delayed, unavailable, or inconsistent.",
+    "Token-account concentration does not identify beneficial owners.",
+    "Market discoverability does not establish liquidity quality, legality, value, or safety.",
+    "The risk score is a technical heuristic and not an official rating."
+  ],
+  "interfaces": {
+    "openapi": "https://avora-agent-forge.netlify.app/public-sector/openapi.json",
+    "a2aAgentCard": "https://avora-agent-forge.netlify.app/.well-known/agent-card.json",
+    "mcp": "https://avora-agent-forge.netlify.app/mcp",
+    "aggregateCommerceStatus": "https://avora-agent-forge.netlify.app/api/agent/revenue",
+    "jwks": "https://avora-agent-forge.netlify.app/.well-known/jwks.json",
+    "dcat": "https://avora-agent-forge.netlify.app/public-sector/catalog.jsonld"
+  }
+}

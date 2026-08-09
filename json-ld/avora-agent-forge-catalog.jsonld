@@ -1,0 +1,65 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "https://avora-agent-forge.netlify.app/public-sector/catalog.jsonld",
+  "@type": "dcat:Catalog",
+  "dcterms:title": "AVORA Public AI Service Catalog",
+  "dcterms:description": "Machine-readable catalog for AVORA public-data Solana evidence services.",
+  "dcterms:language": ["en", "ko"],
+  "dcterms:conformsTo": {
+    "@id": "https://www.w3.org/TR/vocab-dcat-3/"
+  },
+  "dcat:service": {
+    "@id": "https://avora-agent-forge.netlify.app/api/gov/v1/scan",
+    "@type": "dcat:DataService",
+    "dcterms:title": "Signed Solana Token Assessment Service",
+    "dcterms:description": "Read-only point-in-time public token evidence with a verifiable Ed25519 JWS receipt.",
+    "dcterms:license": {
+      "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    "dcterms:conformsTo": [
+      {
+        "@id": "https://spec.openapis.org/oas/latest.html"
+      },
+      {
+        "@id": "https://a2a-protocol.org/latest/specification/"
+      }
+    ],
+    "dcat:endpointURL": {
+      "@id": "https://avora-agent-forge.netlify.app/api/gov/v1/scan"
+    },
+    "dcat:endpointDescription": {
+      "@id": "https://avora-agent-forge.netlify.app/public-sector/openapi.json"
+    },
+    "dcat:landingPage": {
+      "@id": "https://avora-agent-forge.netlify.app/public-sector/"
+    },
+    "dcat:theme": [
+      "public data",
+      "blockchain evidence",
+      "AI interoperability"
+    ]
+  },
+  "dcat:dataset": {
+    "@id": "https://avora-agent-forge.netlify.app/agent-forge/status/",
+    "@type": "dcat:Dataset",
+    "dcterms:title": "AVORA Aggregate Commerce Status",
+    "dcterms:description": "Privacy-preserving scan, order, delivery, and verified Solana settlement aggregates. No wallet, mint, IP, or user identifiers are published.",
+    "dcterms:license": {
+      "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    "dcat:landingPage": {
+      "@id": "https://avora-agent-forge.netlify.app/agent-forge/status/"
+    },
+    "dcat:distribution": {
+      "@type": "dcat:Distribution",
+      "dcterms:format": "application/json",
+      "dcat:accessURL": {
+        "@id": "https://avora-agent-forge.netlify.app/api/agent/revenue"
+      }
+    }
+  }
+}

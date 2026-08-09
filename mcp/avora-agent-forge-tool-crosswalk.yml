@@ -1,0 +1,126 @@
+generated: '2026-08-09'
+method: derived
+source: >-
+  mcp/avora-agent-forge-tools-list.json (live tools/list, 200) bound to
+  openapi/avora-agent-forge-commerce-openapi.json and
+  openapi/avora-agent-forge-public-sector-openapi.json
+surfaces:
+  openapi:
+    - file: openapi/avora-agent-forge-commerce-openapi.json
+      title: AVORA Agent Forge Commerce API
+      version: 3.0.0
+      operations: 5
+    - file: openapi/avora-agent-forge-public-sector-openapi.json
+      title: AVORA Public AI Interoperability API
+      version: 1.0.0
+      operations: 3
+  mcp:
+    url: https://avora-agent-forge.netlify.app/mcp
+    transport: streamable-http
+    gated: false
+    tools: 11
+  graphql: null
+  a2a:
+    url: https://avora-agent-forge.netlify.app/a2a
+    skills: 3
+    note: >-
+      The A2A card publishes 3 skills that are a strict subset of the MCP tool set
+      (list_avora_offers, scan_solana_token_public_sector, get_verified_revenue_status).
+crosswalk:
+  - tool: scan_solana_token
+    category: risk-scan
+    rest: [scanSolanaTokenFree]
+    binding: rest
+    confidence: high
+    note: GET /api/agent/scan; tool `mint` maps to the required mint query parameter.
+  - tool: scan_solana_token_public_sector
+    category: risk-scan
+    rest: [createSignedSolanaTokenAssessment]
+    binding: rest
+    confidence: high
+    note: >-
+      GET /api/gov/v1/scan on the public-sector spec; returns the Ed25519 JWS signed
+      assessment. Tool adds an optional requestId trace parameter.
+  - tool: list_avora_offers
+    category: catalog
+    rest: [listEvidenceOffers]
+    binding: rest
+    confidence: high
+    note: GET /api/agent/offers; no required inputs on either surface.
+  - tool: create_starter_snapshot_order
+    category: order
+    rest: [createPaidEvidenceOrder]
+    binding: rest
+    confidence: high
+    note: >-
+      Fans in to one REST operation. GET /api/agent/payment-order with tier=starter;
+      the tier is fixed by the tool name rather than passed as a parameter.
+  - tool: create_pro_report_order
+    category: order
+    rest: [createPaidEvidenceOrder]
+    binding: rest
+    confidence: high
+    note: Same REST operation with tier=pro.
+  - tool: create_portfolio_report_order
+    category: order
+    rest: [createPaidEvidenceOrder]
+    binding: rest
+    confidence: high
+    note: >-
+      Same REST operation with tier=portfolio; takes `mints` (2-10 comma-separated)
+      instead of a single `mint`.
+  - tool: verify_starter_snapshot_payment
+    category: settlement
+    rest: [verifyPaymentAndDeliverEvidence]
+    binding: rest
+    confidence: high
+    note: >-
+      POST /api/agent/pro-scan with tier=starter. Requires mint + reference + orderId,
+      matching the PaymentProof schema.
+  - tool: verify_pro_report_payment
+    category: settlement
+    rest: [verifyPaymentAndDeliverEvidence]
+    binding: rest
+    confidence: high
+    note: Same REST operation with tier=pro.
+  - tool: verify_portfolio_report_payment
+    category: settlement
+    rest: [verifyPaymentAndDeliverEvidence]
+    binding: rest
+    confidence: high
+    note: Same REST operation with tier=portfolio, taking `mints`.
+  - tool: get_verified_revenue_status
+    category: telemetry
+    rest: [getVerifiedRevenueStatus]
+    binding: rest
+    confidence: high
+    note: GET /api/agent/revenue; optional `days` maps to the days query parameter (1-90).
+mcp_only:
+  - tool: get_avora_service_info
+    reason: >-
+      Service metadata tool with no corresponding public REST operation in either OpenAPI.
+      The equivalent human/machine surface is the static /llms.txt and
+      /.well-known/avora-agent.json descriptors rather than a REST endpoint.
+rest_only:
+  - operation: getPublicAiServiceHealth
+    spec: openapi/avora-agent-forge-public-sector-openapi.json
+    capability: health
+    reason: Liveness probe (GET /api/gov/v1/health); not exposed as an agent tool.
+  - operation: getReceiptVerificationKeys
+    spec: openapi/avora-agent-forge-public-sector-openapi.json
+    capability: key-discovery
+    reason: >-
+      GET /.well-known/jwks.json; receipt verification keys are fetched directly by the
+      verifier, not through a tool call.
+coverage:
+  tools_named: 11
+  tools_bound: 10
+  mcp_only: 1
+  rest_operations_total: 8
+  rest_operations_with_tool: 6
+  rest_only: 2
+  notes: >-
+    The MCP surface is wider than REST in tool count but narrower in capability: nine of
+    the eleven tools collapse onto just three REST operations, because tier (starter / pro
+    / portfolio) is encoded in the tool name instead of a parameter. That is a deliberate
+    agent-ergonomics choice, not a capability divergence.

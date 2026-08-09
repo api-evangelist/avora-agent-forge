@@ -1,0 +1,13 @@
+{
+  "name": "AVORA Agent Forge",
+  "description": "Evidence-first Solana token scans, paid evidence delivery, and privacy-preserving verified revenue status.",
+  "version": "3.0.0",
+  "servers": [
+    {
+      "name": "avora-agent-forge",
+      "url": "https://avora-agent-forge.netlify.app/mcp",
+      "transport": "streamable-http",
+      "authentication": "none"
+    }
+  ]
+}

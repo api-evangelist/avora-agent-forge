@@ -1,0 +1,73 @@
+generated: '2026-08-09'
+method: searched
+source: https://avora-agent-forge.netlify.app/agent-forge/pricing.json
+raw_file: avora-agent-forge-pricing.json
+currency: USDC
+network: solana-mainnet
+billing_model: pay-per-artifact
+non_custodial: true
+wallet_approval_required: true
+subscription: false
+note: >-
+  There is no subscription, no account, and no metered quota. Each artifact is bought
+  outright with a user-signed Solana Pay USDC transfer verified on-chain. Creating an order
+  does not transfer funds.
+plans:
+  - id: free
+    name: Free Scan
+    price: '0'
+    currency: USDC
+    mint_count: 1
+    operation: scanSolanaTokenFree
+    access: GET /api/agent/scan?mint={mint}
+  - id: starter
+    name: Signed Risk Snapshot
+    price: '1'
+    currency: USDC
+    mint_count: 1
+    operation: createPaidEvidenceOrder
+    includes:
+      - full live evidence snapshot
+      - timestamped signed assessment
+      - verified payment receipt
+      - downloadable JSON record
+  - id: pro
+    name: Pro Evidence Packet
+    price: '9'
+    currency: USDC
+    mint_count: 1
+    operation: createPaidEvidenceOrder
+    includes:
+      - full technical evidence
+      - signed assessment receipt
+      - decision and listing checklist
+      - downloadable JSON record
+  - id: portfolio
+    name: Portfolio Due Diligence
+    price: '49'
+    currency: USDC
+    mint_count: {minimum: 2, maximum: 10}
+    operation: createPaidEvidenceOrder
+    includes:
+      - comparative risk ranking
+      - signed assessment per token
+      - route and DEX coverage summary
+      - downloadable evidence bundle
+payment_verification:
+  operation: verifyPaymentAndDeliverEvidence
+  method: POST
+  url: https://avora-agent-forge.netlify.app/api/agent/pro-scan
+  validated_fields:
+    - recipient
+    - USDC mint
+    - amount
+    - reference
+    - product
+    - subject hash
+    - campaign memo
+    - payment age
+disclosures:
+  - Creating an order does not transfer funds.
+  - The user must review and sign the payment in a compatible wallet.
+  - Reports are technical information, not investment, legal, or tax advice.
+  - No outcome, return, listing, or government approval is guaranteed.
