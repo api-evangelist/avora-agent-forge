@@ -33,70 +33,52 @@ tags:
   - Solana Pay
   - Public-sector AI Interoperability
 apis:
-  - name: AVORA Agent Forge Commerce API
-    description: >-
-      Solana SPL token risk scanner. Free preview scan, machine-readable offer catalog,
-      Solana Pay (USDC) payment order creation, on-chain settlement verification returning
-      signed evidence packets, and privacy-preserving aggregate revenue funnel status.
-      OpenAPI 3.1, document version 3.0.0; no auth.
-    humanURL: https://avora-agent-forge.netlify.app/agent-forge/
-    baseURL: https://avora-agent-forge.netlify.app
-    tags:
-      - Blockchain
-      - Crypto
-      - Solana
-      - Token Risk
-      - On-chain Evidence
-      - Non-custodial Payments
-      - USDC
-      - Solana Pay
-    properties:
-      - type: OpenAPI
-        url: openapi/avora-agent-forge-commerce-openapi.json
-      - type: Overlay
-        url: overlays/avora-agent-forge-commerce-overlay.yaml
-      - type: Documentation
-        url: https://avora-agent-forge.netlify.app/agent-forge/
-  - name: AVORA Public AI Interoperability API
-    description: >-
-      Read-only, signed public-data Solana token assessments with provenance, named upstream
-      dependencies, and explicit known limitations, returning Ed25519 JWS receipts verifiable
-      against a published JWKS for A2A/MCP/OpenAPI/public-sector workflows. OpenAPI 3.1
-      v1.0.0; no auth; human review required.
-    humanURL: https://avora-agent-forge.netlify.app/public-sector/
-    baseURL: https://avora-agent-forge.netlify.app
-    tags:
-      - Solana
-      - Signed Receipts
-      - Provenance
-      - Public-sector AI Interoperability
-      - AI Agents
-    properties:
-      - type: OpenAPI
-        url: openapi/avora-agent-forge-public-sector-openapi.json
-      - type: Overlay
-        url: overlays/avora-agent-forge-public-sector-overlay.yaml
-      - type: Documentation
-        url: https://avora-agent-forge.netlify.app/public-sector/
-  - name: AVORA Agent Forge MCP Server
-    description: >-
-      Hosted streamable-HTTP MCP server exposing eleven tools across scanning, offers,
-      Solana Pay ordering, settlement verification, and aggregate commerce telemetry.
-      tools/list responds 200 anonymously with a full JSON Schema inputSchema and MCP
-      annotations per tool.
-    humanURL: https://avora-agent-forge.netlify.app/ai/
-    baseURL: https://avora-agent-forge.netlify.app/mcp
-    tags:
-      - MCP
-      - AI Agents
-      - Solana
-    properties:
-      - type: MCPServer
-        url: mcp/avora-agent-forge-mcp.yml
-      - type: ToolCrosswalk
-        url: mcp/avora-agent-forge-tool-crosswalk.yml
-      - type: Documentation
-        url: https://avora-agent-forge.netlify.app/ai/
+- name: AVORA Agent Forge MCP Server
+  description: >-
+    Hosted streamable-HTTP MCP server exposing eleven tools across scanning, offers, Solana Pay ordering,
+    settlement verification, and aggregate commerce telemetry. tools/list responds 200 anonymously with
+    a full JSON Schema inputSchema and MCP annotations per tool.
+  humanURL: https://avora-agent-forge.netlify.app/ai/
+  baseURL: https://avora-agent-forge.netlify.app/mcp
+  tags:
+  - MCP
+  - AI Agents
+  - Solana
+  properties:
+  - type: MCPServer
+    url: mcp/avora-agent-forge-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/avora-agent-forge-tool-crosswalk.yml
+  - type: Documentation
+    url: https://avora-agent-forge.netlify.app/ai/
+- aid: avora-agent-forge:avora-agent-forge-agent-api
+  name: AVORA Agent Forge Agent API
+  description: The Agent API from AVORA Agent Forge — 5 operation(s) for agent.
+  humanURL: https://avora-agent-forge.netlify.app/agent-forge/
+  baseURL: https://avora-agent-forge.netlify.app
+  tags:
+  - Agent
+  properties:
+  - type: OpenAPI
+    url: openapi/avora-agent-forge-agent-api-openapi.yml
+  - type: Documentation
+    url: https://avora-agent-forge.netlify.app/agent-forge/
+  - type: Documentation
+    url: https://avora-agent-forge.netlify.app/public-sector/
+- aid: avora-agent-forge:avora-agent-forge-public-evidence-api
+  name: AVORA Agent Forge Public Evidence API
+  description: Public-data token evidence with mandatory human-review controls.
+  humanURL: https://avora-agent-forge.netlify.app/agent-forge/
+  baseURL: https://avora-agent-forge.netlify.app
+  tags:
+  - Public Evidence
+  properties:
+  - type: OpenAPI
+    url: openapi/avora-agent-forge-public-evidence-api-openapi.yml
+  - type: Documentation
+    url: https://avora-agent-forge.netlify.app/agent-forge/
+  - type: Documentation
+    url: https://avora-agent-forge.netlify.app/public-sector/
 common:
   - type: DeveloperPortal
     url: https://avora-agent-forge.netlify.app/agent-forge/
