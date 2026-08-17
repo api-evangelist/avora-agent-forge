@@ -11,7 +11,7 @@ description: >-
   published JWKS, and the service ships a voluntary NIST AI RMF alignment profile that
   explicitly disclaims certification and government approval and requires human review.
 image: https://avora-agent-forge.netlify.app/AVORA.png
-url: https://avora-agent-forge.apievangelist.com/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/avora-agent-forge/refs/heads/main/apis.yml
 created: '2026-07-30'
 modified: '2026-08-09'
 specificationVersion: '0.21'
