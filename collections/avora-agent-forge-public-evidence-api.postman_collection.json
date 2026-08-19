@@ -1,0 +1,390 @@
+{
+  "item": [
+    {
+      "id": "06db1e85-9f91-4a4e-a8db-cd902e958038",
+      "name": "Public Evidence",
+      "description": {
+        "content": "Public-data token evidence with mandatory human-review controls.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51c9a363-3428-411c-a62f-3741ac28d074",
+          "name": "Check service and signing-key readiness",
+          "request": {
+            "name": "Check service and signing-key readiness",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "gov",
+                "v1",
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ae809de-df06-46ec-8dc6-3844eff47382",
+              "name": "Operational",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "gov",
+                    "v1",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "92cae0a4-12a9-4ea0-b1a1-d9f31b867dba",
+              "name": "Signing service degraded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "gov",
+                    "v1",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2658890-1db9-4e35-834e-8fe6f7e497e4",
+          "name": "Create a signed public-data Solana token assessment",
+          "request": {
+            "name": "Create a signed public-data Solana token assessment",
+            "description": {
+              "content": "Returns an assessment payload and detached-style JWS receipt. The response is informational only and requires human review.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "gov",
+                "v1",
+                "scan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mint",
+                  "value": "<string>",
+                  "description": "(Required) Base58 SPL token mint address."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional caller trace identifier.",
+                "key": "X-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bed2a48a-89e9-48f7-b44f-c021b69069d6",
+              "name": "Signed assessment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "gov",
+                    "v1",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mint",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional caller trace identifier.",
+                    "key": "X-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "X-Request-Id",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"schemaVersion\": 3478,\n    \"requestId\": 8640,\n    \"issuedAt\": true,\n    \"dataGovernance\": \"string\",\n    \"subject\": true,\n    \"assessment\": true,\n    \"provenance\": true,\n    \"limitations\": 2183.8437766445772\n  },\n  \"receipt\": {\n    \"format\": {},\n    \"algorithm\": {},\n    \"keyId\": \"string\",\n    \"protected\": \"string\",\n    \"signature\": \"string\",\n    \"payloadSha256\": \"string\",\n    \"publicKeyUrl\": \"https://DYdwVqFZGKTnYcPdMwXp.sxdRRT5cgtYFpMy.U\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1167fa3e-f6d3-4d67-870a-0bef979e6e52",
+              "name": "Invalid mint or upstream evidence failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "gov",
+                    "v1",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mint",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional caller trace identifier.",
+                    "key": "X-Request-Id",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d884a8f5-aac3-4459-9a23-9dc18ffb0022",
+              "name": "Receipt signing unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "gov",
+                    "v1",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mint",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional caller trace identifier.",
+                    "key": "X-Request-Id",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "053e899d-abf9-4446-b3aa-0d39fc533a4e",
+          "name": "Get Ed25519 public verification keys",
+          "request": {
+            "name": "Get Ed25519 public verification keys",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "jwks.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/jwk-set+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b81edc0b-4295-44bd-9b02-4504e2e3b0d8",
+              "name": "JSON Web Key Set",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "jwks.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/jwk-set+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/jwk-set+json"
+                }
+              ],
+              "body": "{\n  \"keys\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://avora-agent-forge.netlify.app",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "63807081-f52f-4488-96b0-08913ca9f535",
+    "name": "AVORA Public AI Interoperability Public Evidence API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Read-only, signed public-data Solana token assessments. This interface claims neither government approval nor NIST certification.",
+      "type": "text/plain"
+    }
+  }
+}

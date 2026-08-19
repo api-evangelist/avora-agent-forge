@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AVORA Public AI Interoperability Public Evidence API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Public Evidence",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check service and signing-key readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://avora-agent-forge.netlify.app/api/gov/v1/health"
+          },
+          "docs": "Check service and signing-key readiness"
+        },
+        {
+          "info": {
+            "name": "Create a signed public-data Solana token assessment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://avora-agent-forge.netlify.app/api/gov/v1/scan",
+            "headers": [
+              {
+                "name": "X-Request-Id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mint",
+                "value": "",
+                "type": "query",
+                "description": "Base58 SPL token mint address."
+              }
+            ]
+          },
+          "docs": "Returns an assessment payload and detached-style JWS receipt. The response is informational only and requires human review."
+        },
+        {
+          "info": {
+            "name": "Get Ed25519 public verification keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://avora-agent-forge.netlify.app/.well-known/jwks.json"
+          },
+          "docs": "Get Ed25519 public verification keys"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

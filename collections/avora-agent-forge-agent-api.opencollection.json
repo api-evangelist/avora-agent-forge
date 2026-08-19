@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AVORA Forge Commerce Agent API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agent",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run a free Solana token risk preview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://avora-agent-forge.netlify.app/api/agent/scan",
+            "params": [
+              {
+                "name": "mint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "campaign",
+                "value": "",
+                "type": "query",
+                "description": "Optional aggregate attribution code. No wallet, mint, IP, or user identifier is stored."
+              }
+            ]
+          },
+          "docs": "Run a free Solana token risk preview"
+        },
+        {
+          "info": {
+            "name": "Create a 1, 9, or 49 USDC Solana Pay order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://avora-agent-forge.netlify.app/api/agent/payment-order",
+            "params": [
+              {
+                "name": "tier",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mint",
+                "value": "",
+                "type": "query",
+                "description": "Required for the starter and pro tiers."
+              },
+              {
+                "name": "mints",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of 2-10 mints for the portfolio tier."
+              },
+              {
+                "name": "campaign",
+                "value": "",
+                "type": "query",
+                "description": "Optional onchain attribution code."
+              }
+            ]
+          },
+          "docs": "Order creation does not transfer funds. The user must review and sign the request in a compatible wallet."
+        },
+        {
+          "info": {
+            "name": "List current evidence products and checkout templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://avora-agent-forge.netlify.app/api/agent/offers",
+            "params": [
+              {
+                "name": "campaign",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Machine-readable catalog for humans and AI agents. Listing an offer never moves funds."
+        },
+        {
+          "info": {
+            "name": "Verify settlement and deliver paid evidence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://avora-agent-forge.netlify.app/api/agent/pro-scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates recipient, USDC mint, amount, unique reference, product subject hash, campaign memo, and payment age before delivery."
+        },
+        {
+          "info": {
+            "name": "Get aggregate funnel and verified onchain revenue status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://avora-agent-forge.netlify.app/api/agent/revenue",
+            "params": [
+              {
+                "name": "days",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns anonymous scan, order, and delivery counts plus verified Solana USDC settlement. Wallet, mint, IP, signature, and user identifiers are not returned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,199 @@
+openapi: 3.2.0
+info:
+  title: AVORA Forge Commerce Agent API
+  version: 3.0.0
+  description: Evidence-first Solana token intelligence with non-custodial, user-signed Solana Pay checkout and privacy-preserving verified commerce telemetry.
+servers:
+- url: https://avora-agent-forge.netlify.app
+tags:
+- name: Agent
+paths:
+  /api/agent/scan:
+    get:
+      operationId: scanSolanaTokenFree
+      summary: Run a free Solana token risk preview
+      parameters:
+      - name: mint
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/SolanaMint'
+      - name: campaign
+        in: query
+        required: false
+        description: Optional aggregate attribution code. No wallet, mint, IP, or user identifier is stored.
+        schema:
+          type: string
+          maxLength: 16
+          pattern: ^[A-Za-z0-9_-]+$
+      responses:
+        '200':
+          description: Risk preview
+        '400':
+          description: Invalid mint or upstream scan failure
+      tags:
+      - Agent
+  /api/agent/payment-order:
+    get:
+      operationId: createPaidEvidenceOrder
+      summary: Create a 1, 9, or 49 USDC Solana Pay order
+      description: Order creation does not transfer funds. The user must review and sign the request in a compatible wallet.
+      parameters:
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - starter
+          - pro
+          - portfolio
+      - name: mint
+        in: query
+        description: Required for the starter and pro tiers.
+        schema:
+          $ref: '#/components/schemas/SolanaMint'
+      - name: mints
+        in: query
+        description: Comma-separated list of 2-10 mints for the portfolio tier.
+        schema:
+          type: string
+      - name: campaign
+        in: query
+        description: Optional onchain attribution code.
+        schema:
+          type: string
+          maxLength: 16
+          pattern: ^[A-Za-z0-9_-]+$
+      responses:
+        '200':
+          description: Unique payment order, Solana Pay URL, settlement contract, and QR image
+        '400':
+          description: Invalid tier, mint count, or address
+      tags:
+      - Agent
+  /api/agent/offers:
+    get:
+      operationId: listEvidenceOffers
+      summary: List current evidence products and checkout templates
+      description: Machine-readable catalog for humans and AI agents. Listing an offer never moves funds.
+      parameters:
+      - name: campaign
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 16
+          pattern: ^[A-Za-z0-9_-]+$
+      responses:
+        '200':
+          description: Current products, prices, checkout templates, and safety policies
+      tags:
+      - Agent
+  /api/agent/pro-scan:
+    post:
+      operationId: verifyPaymentAndDeliverEvidence
+      summary: Verify settlement and deliver paid evidence
+      description: Validates recipient, USDC mint, amount, unique reference, product subject hash, campaign memo, and payment age before delivery.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/StarterVerification'
+              - $ref: '#/components/schemas/ProVerification'
+              - $ref: '#/components/schemas/PortfolioVerification'
+      responses:
+        '200':
+          description: Verified signed evidence packet
+        '400':
+          description: Invalid order or verification parameters
+        '402':
+          description: Matching payment not found yet
+      tags:
+      - Agent
+  /api/agent/revenue:
+    get:
+      operationId: getVerifiedRevenueStatus
+      summary: Get aggregate funnel and verified onchain revenue status
+      description: Returns anonymous scan, order, and delivery counts plus verified Solana USDC settlement. Wallet, mint, IP, signature, and user identifiers are not returned.
+      parameters:
+      - name: days
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 90
+          default: 30
+      responses:
+        '200':
+          description: Aggregate service, funnel, and verified revenue status
+        '503':
+          description: Revenue monitor temporarily unavailable
+      tags:
+      - Agent
+components:
+  schemas:
+    ProVerification:
+      allOf:
+      - $ref: '#/components/schemas/PaymentProof'
+      - type: object
+        required:
+        - tier
+        - mint
+        properties:
+          tier:
+            const: pro
+          mint:
+            $ref: '#/components/schemas/SolanaMint'
+    PortfolioVerification:
+      allOf:
+      - $ref: '#/components/schemas/PaymentProof'
+      - type: object
+        required:
+        - tier
+        - mints
+        properties:
+          tier:
+            const: portfolio
+          mints:
+            type: array
+            minItems: 2
+            maxItems: 10
+            uniqueItems: true
+            items:
+              $ref: '#/components/schemas/SolanaMint'
+    SolanaMint:
+      type: string
+      pattern: ^[1-9A-HJ-NP-Za-km-z]{32,44}$
+    PaymentProof:
+      type: object
+      required:
+      - reference
+      - orderId
+      properties:
+        reference:
+          type: string
+        orderId:
+          type: string
+          pattern: ^[a-f0-9]{16}$
+        campaign:
+          type: string
+          maxLength: 16
+        requestId:
+          type: string
+          maxLength: 64
+    StarterVerification:
+      allOf:
+      - $ref: '#/components/schemas/PaymentProof'
+      - type: object
+        required:
+        - tier
+        - mint
+        properties:
+          tier:
+            const: starter
+          mint:
+            $ref: '#/components/schemas/SolanaMint'

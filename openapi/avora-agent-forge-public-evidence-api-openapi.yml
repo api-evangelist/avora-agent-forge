@@ -1,0 +1,125 @@
+openapi: 3.2.0
+info:
+  title: AVORA Public AI Interoperability Public Evidence API
+  version: 1.0.0
+  description: Read-only, signed public-data Solana token assessments. This interface claims neither government approval nor NIST certification.
+servers:
+- url: https://avora-agent-forge.netlify.app
+tags:
+- name: Public Evidence
+  description: Public-data token evidence with mandatory human-review controls.
+paths:
+  /api/gov/v1/health:
+    get:
+      operationId: getPublicAiServiceHealth
+      summary: Check service and signing-key readiness
+      tags:
+      - Public Evidence
+      responses:
+        '200':
+          description: Operational
+        '503':
+          description: Signing service degraded
+  /api/gov/v1/scan:
+    get:
+      operationId: createSignedSolanaTokenAssessment
+      summary: Create a signed public-data Solana token assessment
+      description: Returns an assessment payload and detached-style JWS receipt. The response is informational only and requires human review.
+      tags:
+      - Public Evidence
+      parameters:
+      - name: mint
+        in: query
+        required: true
+        description: Base58 SPL token mint address.
+        schema:
+          type: string
+          pattern: ^[1-9A-HJ-NP-Za-km-z]{32,44}$
+      - name: X-Request-Id
+        in: header
+        required: false
+        description: Optional caller trace identifier.
+        schema:
+          type: string
+          maxLength: 64
+          pattern: ^[A-Za-z0-9._:-]+$
+      responses:
+        '200':
+          description: Signed assessment
+          headers:
+            X-Request-Id:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignedAssessment'
+        '400':
+          description: Invalid mint or upstream evidence failure
+        '503':
+          description: Receipt signing unavailable
+  /.well-known/jwks.json:
+    get:
+      operationId: getReceiptVerificationKeys
+      summary: Get Ed25519 public verification keys
+      tags:
+      - Public Evidence
+      responses:
+        '200':
+          description: JSON Web Key Set
+          content:
+            application/jwk-set+json:
+              schema:
+                type: object
+                required:
+                - keys
+                properties:
+                  keys:
+                    type: array
+                    items:
+                      type: object
+components:
+  schemas:
+    SignedAssessment:
+      type: object
+      required:
+      - payload
+      - receipt
+      properties:
+        payload:
+          type: object
+          required:
+          - schemaVersion
+          - requestId
+          - issuedAt
+          - dataGovernance
+          - subject
+          - assessment
+          - provenance
+          - limitations
+        receipt:
+          type: object
+          required:
+          - format
+          - algorithm
+          - keyId
+          - protected
+          - signature
+          - payloadSha256
+          - publicKeyUrl
+          properties:
+            format:
+              const: JWS
+            algorithm:
+              const: EdDSA
+            keyId:
+              type: string
+            protected:
+              type: string
+            signature:
+              type: string
+            payloadSha256:
+              type: string
+            publicKeyUrl:
+              type: string
+              format: uri

@@ -6,116 +6,145 @@ server:
   name: avora-agent-forge
   registry_name: app.netlify.avora-agent-forge/solana-risk
   title: AVORA Agent Forge
-  description: >-
-    Solana token scans, signed assessments, user-approved evidence orders, and verified
-    commerce status.
+  description: Solana token scans, signed assessments, user-approved evidence orders, and verified commerce
+    status.
   version: 3.0.0
   transport: streamable-http
   url: https://avora-agent-forge.netlify.app/mcp
   authentication: none
   website: https://avora-agent-forge.netlify.app/ai/
 descriptors:
-  - path: /mcp-server.json
-    schema: https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json
-    file: avora-agent-forge-mcp-server.json
-    status: 200
-  - path: /.well-known/mcp.json
-    file: ../well-known/avora-agent-forge-mcp.json
-    status: 200
+- path: /mcp-server.json
+  schema: https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json
+  file: avora-agent-forge-mcp-server.json
+  status: 200
+- path: /.well-known/mcp.json
+  file: ../well-known/avora-agent-forge-mcp.json
+  status: 200
 introspection:
   method: tools/list
   gated: false
   http_status: 200
   file: avora-agent-forge-tools-list.json
-  note: >-
-    tools/list responded 200 anonymously over streamable-http; the tool set and every
-    inputSchema below are the live server response, not a derivation.
+  note: tools/list responded 200 anonymously over streamable-http; the tool set and every inputSchema
+    below are the live server response, not a derivation.
 install:
   claude_code: claude mcp add --transport http avora https://avora-agent-forge.netlify.app/mcp
 tools:
-  - name: scan_solana_token
-    title: Scan a Solana Token
-    description: >-
-      Run a live, evidence-first Solana token risk scan. Checks mint and freeze authority,
-      top-account concentration, DexScreener discovery, and Jupiter routing.
-    required: [mint]
-    read_only: true
-    idempotent: true
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#scanSolanaTokenFree
-  - name: scan_solana_token_public_sector
-    title: Create a Signed Public-Sector Token Assessment
-    description: >-
-      Return a signed, independently verifiable Solana token assessment with PUBLIC data
-      classification, provenance, known limitations, and mandatory human-review metadata.
-    required: [mint]
-    optional: [requestId]
-    read_only: true
-    idempotent: false
-    source_operation: openapi/avora-agent-forge-public-sector-openapi.json#createSignedSolanaTokenAssessment
-  - name: list_avora_offers
-    title: List AVORA Evidence Offers
-    required: []
-    read_only: true
-    idempotent: true
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#listEvidenceOffers
-  - name: create_starter_snapshot_order
-    title: Create a 1 USDC Signed Snapshot Order
-    required: [mint]
-    optional: [campaign]
-    read_only: true
-    idempotent: false
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
-  - name: create_pro_report_order
-    title: Create a Pro Report Order
-    required: [mint]
-    optional: [campaign]
-    read_only: true
-    idempotent: false
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
-  - name: create_portfolio_report_order
-    title: Create a Portfolio Report Order
-    required: [mints]
-    optional: [campaign]
-    read_only: true
-    idempotent: false
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
-  - name: verify_starter_snapshot_payment
-    title: Verify Payment and Deliver Signed Snapshot
-    required: [mint, reference, orderId]
-    optional: [campaign, requestId]
-    read_only: true
-    idempotent: true
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
-  - name: verify_pro_report_payment
-    title: Verify Payment and Deliver Report
-    required: [mint, reference, orderId]
-    optional: [campaign, requestId]
-    read_only: true
-    idempotent: true
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
-  - name: verify_portfolio_report_payment
-    title: Verify Payment and Deliver Portfolio Report
-    required: [mints, reference, orderId]
-    optional: [campaign, requestId]
-    read_only: true
-    idempotent: true
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
-  - name: get_avora_service_info
-    title: Get AVORA Service Information
-    required: []
-    read_only: true
-    idempotent: true
-    source_operation: null
-  - name: get_verified_revenue_status
-    title: Get Verified Revenue and Conversion Status
-    required: []
-    optional: [days]
-    read_only: true
-    idempotent: true
-    source_operation: openapi/avora-agent-forge-commerce-openapi.json#getVerifiedRevenueStatus
+- name: scan_solana_token
+  title: Scan a Solana Token
+  description: Run a live, evidence-first Solana token risk scan. Checks mint and freeze authority, top-account
+    concentration, DexScreener discovery, and Jupiter routing.
+  required:
+  - mint
+  read_only: true
+  idempotent: true
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#scanSolanaTokenFree
+- name: scan_solana_token_public_sector
+  title: Create a Signed Public-Sector Token Assessment
+  description: Return a signed, independently verifiable Solana token assessment with PUBLIC data classification,
+    provenance, known limitations, and mandatory human-review metadata.
+  required:
+  - mint
+  optional:
+  - requestId
+  read_only: true
+  idempotent: false
+  source_operation: openapi/avora-agent-forge-public-sector-openapi.json#createSignedSolanaTokenAssessment
+- name: list_avora_offers
+  title: List AVORA Evidence Offers
+  required: []
+  read_only: true
+  idempotent: true
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#listEvidenceOffers
+- name: create_starter_snapshot_order
+  title: Create a 1 USDC Signed Snapshot Order
+  required:
+  - mint
+  optional:
+  - campaign
+  read_only: true
+  idempotent: false
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
+- name: create_pro_report_order
+  title: Create a Pro Report Order
+  required:
+  - mint
+  optional:
+  - campaign
+  read_only: true
+  idempotent: false
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
+- name: create_portfolio_report_order
+  title: Create a Portfolio Report Order
+  required:
+  - mints
+  optional:
+  - campaign
+  read_only: true
+  idempotent: false
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
+- name: verify_starter_snapshot_payment
+  title: Verify Payment and Deliver Signed Snapshot
+  required:
+  - mint
+  - reference
+  - orderId
+  optional:
+  - campaign
+  - requestId
+  read_only: true
+  idempotent: true
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+- name: verify_pro_report_payment
+  title: Verify Payment and Deliver Report
+  required:
+  - mint
+  - reference
+  - orderId
+  optional:
+  - campaign
+  - requestId
+  read_only: true
+  idempotent: true
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+- name: verify_portfolio_report_payment
+  title: Verify Payment and Deliver Portfolio Report
+  required:
+  - mints
+  - reference
+  - orderId
+  optional:
+  - campaign
+  - requestId
+  read_only: true
+  idempotent: true
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+- name: get_avora_service_info
+  title: Get AVORA Service Information
+  required: []
+  read_only: true
+  idempotent: true
+  source_operation: null
+- name: get_verified_revenue_status
+  title: Get Verified Revenue and Conversion Status
+  required: []
+  optional:
+  - days
+  read_only: true
+  idempotent: true
+  source_operation: openapi/avora-agent-forge-commerce-openapi.json#getVerifiedRevenueStatus
 x-evidence:
   fetched: '2026-08-09'
   url: https://avora-agent-forge.netlify.app/mcp
   method: POST tools/list
   http_status: 200
   tool_count: 11
+deployment:
+  mode: remote
+  endpoint: https://avora-agent-forge.netlify.app/mcp
+  verified: probed
+  probe: live
+  tools: 11
+  checked: '2026-08-12'
+  source: catalog MCP census
