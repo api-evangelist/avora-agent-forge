@@ -57,6 +57,8 @@ apis:
   humanURL: https://avora-agent-forge.netlify.app/agent-forge/
   baseURL: https://avora-agent-forge.netlify.app
   tags:
+  - Agents
+  tags_raw:
   - Agent
   properties:
   - type: OpenAPI
