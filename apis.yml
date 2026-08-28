@@ -10,6 +10,18 @@ description: >-
   assessments return Ed25519 JWS receipts that any third party can verify offline against a
   published JWKS, and the service ships a voluntary NIST AI RMF alignment profile that
   explicitly disclaims certification and government approval and requires human review.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://avora-agent-forge.netlify.app/AVORA.png
 url: https://raw.githubusercontent.com/api-evangelist/avora-agent-forge/refs/heads/main/apis.yml
 created: '2026-07-30'
