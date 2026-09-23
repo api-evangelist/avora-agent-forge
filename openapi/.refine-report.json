@@ -1,8 +1,8 @@
 {
   "provider": "avora-agent-forge",
   "sources": [
-    "avora-agent-forge-agent-api-openapi.yml",
-    "avora-agent-forge-public-evidence-api-openapi.yml"
+    "_original/avora-agent-forge-commerce-openapi.json",
+    "_original/avora-agent-forge-public-sector-openapi.json"
   ],
   "outputs": [
     "avora-agent-forge-agent-api-openapi.yml",
@@ -12,9 +12,19 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "avora-agent-forge-agent-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "avora-agent-forge-public-evidence-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "avora-agent-forge-commerce-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "avora-agent-forge-commerce-openapi.json: tagged paths GET /api/agent/scan -> Agent",
+    "avora-agent-forge-commerce-openapi.json: tagged paths GET /api/agent/payment-order -> Agent",
+    "avora-agent-forge-commerce-openapi.json: tagged paths GET /api/agent/offers -> Agent",
+    "avora-agent-forge-commerce-openapi.json: tagged paths POST /api/agent/pro-scan -> Agent",
+    "avora-agent-forge-commerce-openapi.json: tagged paths GET /api/agent/revenue -> Agent",
+    "avora-agent-forge-commerce-openapi.json: declared missing tag: Agent",
+    "avora-agent-forge-public-sector-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "avora-agent-forge-agent-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "avora-agent-forge-public-evidence-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
