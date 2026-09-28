@@ -57,6 +57,8 @@ tools:
   read_only: true
   idempotent: true
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#listEvidenceOffers
+  description: Compare current AVORA evidence products, prices, scope, and safety boundaries before creating
+    an order.
 - name: create_starter_snapshot_order
   title: Create a 1 USDC Signed Snapshot Order
   required:
@@ -66,6 +68,8 @@ tools:
   read_only: true
   idempotent: false
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
+  description: Create a unique Solana Pay request for a 1 USDC signed risk snapshot covering one mint.
+    No funds move until the user explicitly approves the request in a wallet.
 - name: create_pro_report_order
   title: Create a Pro Report Order
   required:
@@ -75,6 +79,8 @@ tools:
   read_only: true
   idempotent: false
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
+  description: Create a unique Solana Pay request for a 9 USDC Pro Evidence Packet covering one mint.
+    Creating the request does not move funds; the user must explicitly approve and sign in their wallet.
 - name: create_portfolio_report_order
   title: Create a Portfolio Report Order
   required:
@@ -84,6 +90,8 @@ tools:
   read_only: true
   idempotent: false
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#createPaidEvidenceOrder
+  description: Create a unique Solana Pay request for a 49 USDC comparative due-diligence packet covering
+    2-10 Solana token mints. No funds move until the user approves the request in a wallet.
 - name: verify_starter_snapshot_payment
   title: Verify Payment and Deliver Signed Snapshot
   required:
@@ -96,6 +104,8 @@ tools:
   read_only: true
   idempotent: true
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+  description: Verify a previously created 1 USDC Solana Pay order and return a timestamped signed risk
+    snapshot. Recipient, token, amount, reference, product hash, campaign memo, and payment age are validated.
 - name: verify_pro_report_payment
   title: Verify Payment and Deliver Report
   required:
@@ -108,6 +118,8 @@ tools:
   read_only: true
   idempotent: true
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+  description: Verify a previously created 9 USDC Solana Pay order and return the signed Pro Evidence
+    Packet. Recipient, token, amount, reference, product hash, campaign memo, and payment age are validated.
 - name: verify_portfolio_report_payment
   title: Verify Payment and Deliver Portfolio Report
   required:
@@ -120,12 +132,16 @@ tools:
   read_only: true
   idempotent: true
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#verifyPaymentAndDeliverEvidence
+  description: Verify a 49 USDC portfolio order and return comparative evidence, ranked risks, decision
+    checklists, and signed assessments for 2-10 mints.
 - name: get_avora_service_info
   title: Get AVORA Service Information
   required: []
   read_only: true
   idempotent: true
   source_operation: null
+  description: Return the public AVORA Agent Forge site, API, MCP endpoint, AVRA mint, pricing, and safety
+    boundaries.
 - name: get_verified_revenue_status
   title: Get Verified Revenue and Conversion Status
   required: []
@@ -134,6 +150,8 @@ tools:
   read_only: true
   idempotent: true
   source_operation: openapi/avora-agent-forge-commerce-openapi.json#getVerifiedRevenueStatus
+  description: Return aggregate AVORA Agent Forge scans, orders, deliveries, and verified onchain USDC
+    revenue for the last 1-90 days. No wallet, mint, IP, or user identifiers are returned.
 x-evidence:
   fetched: '2026-08-09'
   url: https://avora-agent-forge.netlify.app/mcp
@@ -148,3 +166,5 @@ deployment:
   tools: 11
   checked: '2026-08-12'
   source: catalog MCP census
+descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
+  --descriptions, 2026-09-28
