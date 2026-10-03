@@ -136,6 +136,21 @@ paths:
       - Agent
 components:
   schemas:
+    SolanaMint:
+      type: string
+      pattern: ^[1-9A-HJ-NP-Za-km-z]{32,44}$
+    ProVerification:
+      allOf:
+      - $ref: '#/components/schemas/PaymentProof'
+      - type: object
+        required:
+        - tier
+        - mint
+        properties:
+          tier:
+            const: pro
+          mint:
+            $ref: '#/components/schemas/SolanaMint'
     PortfolioVerification:
       allOf:
       - $ref: '#/components/schemas/PaymentProof'
@@ -153,9 +168,6 @@ components:
             uniqueItems: true
             items:
               $ref: '#/components/schemas/SolanaMint'
-    SolanaMint:
-      type: string
-      pattern: ^[1-9A-HJ-NP-Za-km-z]{32,44}$
     StarterVerification:
       allOf:
       - $ref: '#/components/schemas/PaymentProof'
@@ -185,15 +197,3 @@ components:
         requestId:
           type: string
           maxLength: 64
-    ProVerification:
-      allOf:
-      - $ref: '#/components/schemas/PaymentProof'
-      - type: object
-        required:
-        - tier
-        - mint
-        properties:
-          tier:
-            const: pro
-          mint:
-            $ref: '#/components/schemas/SolanaMint'
