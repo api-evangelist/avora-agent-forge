@@ -71,3 +71,35 @@ disclosures:
   - The user must review and sign the payment in a compatible wallet.
   - Reports are technical information, not investment, legal, or tax advice.
   - No outcome, return, listing, or government approval is guaranteed.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free Scan
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Signed Risk Snapshot
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro Evidence Packet
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Portfolio Due Diligence
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
