@@ -1,4 +1,4 @@
-# AVORA Agent Forge (avora-agent-forge)
+# AVORA Agent Forge
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,123 +66,90 @@
 
 AVORA Agent Forge is an evidence-first Solana SPL token risk scanner and public AI interoperability service built for humans, wallets, and autonomous agents. It publishes two OpenAPI 3.1 REST APIs, a hosted streamable-HTTP MCP server whose tools/list responds anonymously with eleven fully-schemad tools, and an A2A agent card with three published skills. Every operation is unauthenticated: there are no accounts, no API keys, and no OAuth. Paid tiers are gated instead by non-custodial, user-signed Solana Pay (USDC) settlement verified on-chain, where the payment reference doubles as the idempotency key. Public-sector assessments return Ed25519 JWS receipts that any third party can verify offline against a published JWKS, and the service ships a voluntary NIST AI RMF alignment profile that explicitly disclaims certification and government approval and requires human review.
 
-**APIs.json:** [https://avora-agent-forge.apievangelist.com/apis.yml](https://avora-agent-forge.apievangelist.com/apis.yml)
+**Areas:** Blockchain · Cryptocurrency · Solana · Token Risk · Due Diligence · On-chain Evidence · Fraud Intelligence · AI Agents · MCP · A2A · Signed Receipts · Provenance
 
-## Tags
+## AVORA Agent Forge on APIs.io
 
-- Blockchain
-- Crypto
-- Solana
-- Token Risk
-- Due Diligence
-- On-chain Evidence
-- Fraud Intelligence
-- AI Agents
-- MCP
-- A2A
-- Signed Receipts
-- Provenance
-- Non-custodial Payments
-- USDC
-- Solana Pay
-- Public-sector AI Interoperability
+Everything profiled for AVORA Agent Forge is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/avora-agent-forge/](https://apis.io/providers/avora-agent-forge/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (3)
 
-- **Created:** 2026-07-30
-- **Modified:** 2026-08-09
+- [AVORA Agent Forge MCP Server](https://apis.io/apis/avora-agent-forge/avora-agent-forge-mcp-server/) — Hosted streamable-HTTP MCP server exposing eleven tools across scanning, offers, Solana Pay ordering, settlement verification, and aggregate commerce…
+- [AVORA Agent Forge Agent API](https://apis.io/apis/avora-agent-forge/avora-agent-forge-agent-api/) — The Agent API from AVORA Agent Forge — 5 operation(s) for agent.
+- [AVORA Agent Forge Public Evidence API](https://apis.io/apis/avora-agent-forge/avora-agent-forge-public-evidence-api/) — Public-data token evidence with mandatory human-review controls.
 
-## APIs
+### Published properties
 
-### AVORA Agent Forge MCP Server
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Hosted streamable-HTTP MCP server exposing eleven tools across scanning, offers, Solana Pay ordering, settlement verification, and aggregate commerce telemetry. tools/list responds 200 anonymously with a full JSON Schema inputSchema and MCP annotations per tool.
+#### MCP servers (1)
 
-- **Human URL:** [https://avora-agent-forge.netlify.app/ai/](https://avora-agent-forge.netlify.app/ai/)
-- **Base URL:** `https://avora-agent-forge.netlify.app/mcp`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [AVORA Agent Forge](https://apis.io/servers/avora-agent-forge/avora-agent-forge/)
 
-- MCP
-- AI Agents
-- Solana
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [M C P Server](mcp/avora-agent-forge-mcp.yml)
-- [Tool Crosswalk](mcp/avora-agent-forge-tool-crosswalk.yml)
-- [Documentation](https://avora-agent-forge.netlify.app/ai/)
-- [Postman Collection](collections/avora-agent-forge-agent-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/avora-agent-forge-agent-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/avora-agent-forge-public-evidence-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/avora-agent-forge-public-evidence-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Avora Agent Forge Agentic Access](https://apis.io/agentic-access/avora-agent-forge/avora-agent-forge-agentic-access/)
 
-### AVORA Agent Forge Agent API
+#### JSON-LD (1)
 
-The Agent API from AVORA Agent Forge — 5 operation(s) for agent.
+Linked-data contexts for the provider's vocabulary.
 
-- **Human URL:** [https://avora-agent-forge.netlify.app/agent-forge/](https://avora-agent-forge.netlify.app/agent-forge/)
-- **Base URL:** `https://avora-agent-forge.netlify.app`
+- [Avora Agent Forge Catalog Context](https://apis.io/jsonld/avora-agent-forge/avora-agent-forge-catalog/)
 
-#### Tags
+#### Collections (2)
 
-- Agent
+Postman and Open Collection request collections.
 
-#### Properties
+- [AVORA Forge Commerce Agent API](https://apis.io/collections/avora-agent-forge/open-avora-agent-forge-agent-api/)
+- [AVORA Public AI Interoperability Public Evidence API](https://apis.io/collections/avora-agent-forge/open-avora-agent-forge-public-evidence-api/)
 
-- [OpenAPI](openapi/avora-agent-forge-agent-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/avora-agent-forge-agent-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/avora-agent-forge-agent-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Avora Agent Forge Commerce Overlay](https://apis.io/overlays/avora-agent-forge/avora-agent-forge-commerce-overlay/)
+- [Avora Agent Forge Public Sector Overlay](https://apis.io/overlays/avora-agent-forge/avora-agent-forge-public-sector-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Avora Agent Forge Authentication](https://apis.io/security/avora-agent-forge/avora-agent-forge-authentication/)
+- [Avora Agent Forge Domain Security](https://apis.io/security/avora-agent-forge/avora-agent-forge-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Avora Agent Forge Plans](https://apis.io/plans/avora-agent-forge/avora-agent-forge-plans/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Documentation](https://avora-agent-forge.netlify.app/agent-forge/)
-- [Documentation](https://avora-agent-forge.netlify.app/public-sector/)
-
-### AVORA Agent Forge Public Evidence API
-
-Public-data token evidence with mandatory human-review controls.
-
-- **Human URL:** [https://avora-agent-forge.netlify.app/agent-forge/](https://avora-agent-forge.netlify.app/agent-forge/)
-- **Base URL:** `https://avora-agent-forge.netlify.app`
-
-#### Tags
-
-- Public Evidence
-
-#### Properties
-
-- [OpenAPI](openapi/avora-agent-forge-public-evidence-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/avora-agent-forge-public-evidence-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/avora-agent-forge-public-evidence-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://avora-agent-forge.netlify.app/agent-forge/)
-- [Documentation](https://avora-agent-forge.netlify.app/public-sector/)
-
-## Common Properties
-
-- [Developer Portal](https://avora-agent-forge.netlify.app/agent-forge/)
-- [Documentation](https://avora-agent-forge.netlify.app/agent-forge/)
-- [API Reference](https://avora-agent-forge.netlify.app/agent-forge/openapi.json)
-- [Getting Started](https://avora-agent-forge.netlify.app/ai/)
+- [Getting started](https://avora-agent-forge.netlify.app/ai/)
+- [API reference](https://avora-agent-forge.netlify.app/agent-forge/openapi.json)
 - [Pricing](https://avora-agent-forge.netlify.app/agent-forge/pricing.json)
-- [Plans](plans/avora-agent-forge-plans.yml)
-- [M C P Server](mcp/avora-agent-forge-mcp.yml)
-- [Tool Crosswalk](mcp/avora-agent-forge-tool-crosswalk.yml)
-- [Agent Card](a2a/avora-agent-forge-a2a.yml)
-- [Agent Skill](skills/_index.yml)
-- [Agentic Access](agentic-access/avora-agent-forge-agentic-access.yml)
-- [L L Ms Txt](llms/avora-agent-forge-llms.txt)
-- [Well Known](well-known/avora-agent-forge-well-known.yml)
-- [Authentication](authentication/avora-agent-forge-authentication.yml)
-- [Conventions](conventions/avora-agent-forge-conventions.yml)
-- [Idempotency](conventions/avora-agent-forge-conventions.yml)
-- [Error Catalog](errors/avora-agent-forge-problem-types.yml)
-- [Lifecycle](lifecycle/avora-agent-forge-lifecycle.yml)
-- [Conformance](conformance/avora-agent-forge-conformance.yml)
-- [Data Model](data-model/avora-agent-forge-data-model.yml)
-- [Domain Security](security/avora-agent-forge-domain-security.yml)
-- [JSON-LD](json-ld/avora-agent-forge-catalog.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Overlay](overlays/avora-agent-forge-commerce-overlay.yaml)
-- [Overlay](overlays/avora-agent-forge-public-sector-overlay.yaml)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** AVORA Agent Forge
-**URL:** https://avora-agent-forge.netlify.app/
+**Unrated** — no public website could be reached for this company, so there was almost nothing to measure and nothing a reader could check.
+
+This is not a score of zero. No rating is published for this company. If that is wrong because something public exists that we missed, say so on this repository or email [info@apievangelist.com](mailto:info@apievangelist.com) and it will be re-run — free, and no justification needed.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for AVORA Agent Forge: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/avora-agent-forge/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
